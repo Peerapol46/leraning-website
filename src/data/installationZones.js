@@ -1,0 +1,130 @@
+// Positions are relative to the scene / case center.
+// Case is laid flat horizontally, open side faces UP (+Y).
+// Camera looks down from above.
+
+export const INSTALL_ZONES = [
+  // Motherboard zones (on the flat motherboard surface)
+  {
+    id: 'cpu_socket',
+    label: 'CPU Socket',
+    position: [0.15, 0.1, 0.1],
+    accepts: ['cpu'],
+    size: [0.4, 0.05, 0.4],
+    parent: 'motherboard',
+  },
+  {
+    id: 'dimm_a1',
+    label: 'DIMM A1',
+    position: [0.55, 0.1, 0.3],
+    accepts: [],
+    size: [0.15, 0.2, 0.08],
+    parent: 'motherboard',
+  },
+  {
+    id: 'dimm_a2',
+    label: 'DIMM A2',
+    position: [0.55, 0.1, 0.15],
+    accepts: ['ram'],
+    size: [0.15, 0.2, 0.08],
+    parent: 'motherboard',
+  },
+  {
+    id: 'dimm_b1',
+    label: 'DIMM B1',
+    position: [0.55, 0.1, 0.0],
+    accepts: [],
+    size: [0.15, 0.2, 0.08],
+    parent: 'motherboard',
+  },
+  {
+    id: 'dimm_b2',
+    label: 'DIMM B2',
+    position: [0.55, 0.1, -0.15],
+    accepts: ['ram'],
+    size: [0.15, 0.2, 0.08],
+    parent: 'motherboard',
+  },
+  {
+    id: 'm2_slot',
+    label: 'M.2 Slot',
+    position: [-0.2, 0.1, -0.35],
+    accepts: ['m2'],
+    size: [0.5, 0.04, 0.15],
+    parent: 'motherboard',
+  },
+  {
+    id: 'pcie_x16',
+    label: 'PCIe x16 Slot',
+    position: [0.0, 0.1, -0.55],
+    accepts: ['gpu'],
+    size: [1.0, 0.08, 0.15],
+    parent: 'motherboard',
+  },
+  {
+    id: 'pcie_x1',
+    label: 'PCIe x1 Slot',
+    position: [0.3, 0.1, -0.7],
+    accepts: [],
+    size: [0.4, 0.05, 0.08],
+    parent: 'motherboard',
+  },
+  // Case zones
+  {
+    id: 'mb_tray',
+    label: 'Motherboard Tray',
+    position: [0.15, -0.02, -0.05],
+    accepts: ['motherboard'],
+    size: [2.0, 0.1, 1.6],
+    parent: 'case',
+  },
+  {
+    id: 'psu_bay',
+    label: 'PSU Bay',
+    position: [-1.05, 0.05, -0.3],
+    accepts: ['psu'],
+    size: [0.9, 0.55, 1.0],
+    parent: 'case',
+  },
+  {
+    id: 'ssd_bay_1',
+    label: 'SSD Bay 1',
+    position: [-1.05, 0.05, 0.55],
+    accepts: ['ssd'],
+    size: [0.4, 0.15, 0.5],
+    parent: 'case',
+  },
+  {
+    id: 'ssd_bay_2',
+    label: 'SSD Bay 2',
+    position: [-1.05, 0.05, 0.3],
+    accepts: ['ssd'],
+    size: [0.4, 0.15, 0.5],
+    parent: 'case',
+  },
+  {
+    id: 'hdd_bay',
+    label: 'HDD Bay',
+    position: [-1.05, 0.05, 0.05],
+    accepts: ['ssd'],
+    size: [0.4, 0.2, 0.5],
+    parent: 'case',
+  },
+  {
+    id: 'cooler_mount',
+    label: 'CPU Cooler Mount',
+    position: [0.15, 0.3, 0.1],
+    accepts: ['cooler'],
+    size: [0.55, 0.15, 0.55],
+    parent: 'motherboard',
+  },
+  {
+    id: 'expansion_slot',
+    label: 'Expansion Slot Area',
+    position: [0.0, 0.1, -0.55],
+    accepts: [],
+    size: [1.2, 0.4, 0.2],
+    parent: 'case',
+  },
+];
+
+export const ZONE_MAP = Object.fromEntries(INSTALL_ZONES.map((z) => [z.id, z]));
