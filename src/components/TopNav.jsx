@@ -1,9 +1,18 @@
 import React from 'react';
 
-export default function TopNav({ store }) {
+const NAV_ITEMS = [
+  ['home', '⌂', 'หน้าแรก'],
+  ['assembly', '🧩', 'ประกอบคอม'],
+  ['pretest', '📝', 'แบบทดสอบก่อนเรียน'],
+  ['posttest', '🎓', 'แบบทดสอบหลังเรียน'],
+  ['windows', '💿', 'ฝึกติดตั้ง Windows'],
+]
+
+export default function TopNav({ store, activePage, onNavigate }) {
   const {
     progress,
     score,
+    mode,
     elapsed,
     formatTime,
     reset,
@@ -17,79 +26,85 @@ export default function TopNav({ store }) {
   } = store;
 
   const getRank = () => {
-    if (score >= 95 && mistakes === 0) return { title: 'Master PC Builder (S-Rank)', color: '#34d399' };
-    if (score >= 80) return { title: 'Proficient Technician (A-Rank)', color: '#38bdf8' };
-    if (score >= 60) return { title: 'Junior Assembler (B-Rank)', color: '#fbbf24' };
-    return { title: 'Apprentice (C-Rank)', color: '#f87171' };
+    if (score >= 95 && mistakes === 0) return { title: 'ช่างประกอบระดับยอดเยี่ยม (S)', color: '#34d399' };
+    if (score >= 80) return { title: 'ช่างประกอบระดับดีมาก (A)', color: '#38bdf8' };
+    if (score >= 60) return { title: 'ช่างประกอบระดับดี (B)', color: '#fbbf24' };
+    return { title: 'กำลังฝึกประกอบ (C)', color: '#f87171' };
   };
 
   const rank = getRank();
+  const practiceMode = mode === 'practice';
+  const rankColor = practiceMode ? '#94a3b8' : rank.color;
+  const neutralTextColor = practiceMode ? '#cbd5e1' : undefined;
 
   return (
     <>
-      <header className="topnav">
+      <nav className="site-nav" aria-label="เมนูหลัก">
+        {NAV_ITEMS.map(([id, icon, label]) => <button key={id} className={`site-nav-link ${activePage === id ? 'active' : ''}`} aria-current={activePage === id ? 'page' : undefined} onClick={() => onNavigate(id)}><span aria-hidden="true">{icon}</span>{label}</button>)}
+      </nav>
+      {activePage === 'assembly' && <header className="topnav">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <h1>Computer Assembly Prototype</h1>
+            <h1>ฝึกประกอบคอมพิวเตอร์</h1>
             <span
               style={{
                 fontSize: '0.7rem',
                 padding: '2px 8px',
                 borderRadius: 999,
                 fontWeight: 600,
-                background: isPoweredOn ? 'rgba(5, 150, 105, 0.3)' : 'rgba(30, 41, 59, 0.8)',
-                color: isPoweredOn ? '#34d399' : '#94a3b8',
-                border: `1px solid ${isPoweredOn ? '#059669' : '#334155'}`,
+                background: isPoweredOn && !practiceMode ? 'rgba(5, 150, 105, 0.3)' : 'rgba(30, 41, 59, 0.8)',
+                color: isPoweredOn && !practiceMode ? '#34d399' : '#94a3b8',
+                border: `1px solid ${isPoweredOn && !practiceMode ? '#059669' : '#334155'}`,
               }}
             >
-              {isPoweredOn ? '● SYSTEM ONLINE' : '○ STANDBY'}
+              {isPoweredOn ? '● เปิดเครื่องแล้ว' : '○ พร้อมเริ่ม'}
             </span>
           </div>
-          <p className="sub">Interactive 3D Hardware Assembly Simulation</p>
+          <p className="sub">จำลองการประกอบชิ้นส่วนคอมพิวเตอร์แบบ 3 มิติ</p>
         </div>
 
         <div className="topnav-stats">
           <div className="stat">
-            <div className="label">Progress</div>
+            <div className="label">ความคืบหน้า</div>
             <div className="val cyan">{progress}%</div>
           </div>
           <div className="stat">
-            <div className="label">Score</div>
-            <div className="val green">{score}</div>
+            <div className="label">คะแนน</div>
+            <div className={`val ${mode === 'practice' ? 'cyan' : 'green'}`}>{score}</div>
           </div>
           <div className="stat">
-            <div className="label">Time</div>
+            <div className="label">เวลา</div>
             <div className="val">{formatTime(elapsed)}</div>
           </div>
 
           <button className="btn" onClick={reset}>
-            Reset
+            เริ่มใหม่
           </button>
 
           {assemblyComplete && !isPoweredOn && (
-            <button className="btn btn-primary" onClick={powerOn}>
-              ⚡ Power On →
+            <button className={`btn btn-primary ${practiceMode ? 'btn-practice' : ''}`} onClick={powerOn}>
+              ⚡ เปิดเครื่อง →
             </button>
           )}
 
           {isPoweredOn && (
             <button
-              className="btn btn-primary"
-              style={{ background: '#059669', borderColor: '#10b981' }}
+              className={`btn btn-primary ${practiceMode ? 'btn-practice' : ''}`}
+              style={practiceMode ? undefined : { background: '#059669', borderColor: '#10b981' }}
               onClick={() => setShowCompletionModal(true)}
             >
-              📊 Results
+              📊 ดูผลสรุป
             </button>
           )}
         </div>
-      </header>
+      </header>}
 
       {/* Completion Summary Modal */}
       {showCompletionModal && (
         <div className="modal-overlay" onClick={() => setShowCompletionModal(false)}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>🎉 PC Assembly Successful!</h2>
+              <h2>🎉 ประกอบคอมพิวเตอร์สำเร็จ!</h2>
               <button
                 className="modal-close-btn"
                 onClick={() => setShowCompletionModal(false)}
@@ -99,33 +114,33 @@ export default function TopNav({ store }) {
             </div>
 
             <p style={{ color: '#94a3b8', fontSize: '0.875rem', marginBottom: 16 }}>
-              All 8 core computer components have been properly seated and verified. The system successfully booted through BIOS POST checks.
+              ติดตั้งชิ้นส่วนครบทั้ง 7 ชิ้นแล้ว และระบบผ่านการตรวจสอบตอนเริ่มเปิดเครื่อง (BIOS) แบบจำลอง
             </p>
 
-            <div className="modal-rank" style={{ borderColor: rank.color, color: rank.color }}>
+            <div className="modal-rank" style={{ borderColor: rankColor, color: rankColor }}>
               {rank.title}
             </div>
 
             <div className="modal-stats-grid">
               <div className="modal-stat-box">
-                <div className="modal-stat-label">Final Score</div>
-                <div className="modal-stat-val" style={{ color: '#34d399' }}>
+                <div className="modal-stat-label">คะแนนรวม</div>
+                <div className="modal-stat-val" style={{ color: practiceMode ? '#cbd5e1' : '#34d399' }}>
                   {score} / 100
                 </div>
               </div>
               <div className="modal-stat-box">
-                <div className="modal-stat-label">Time Taken</div>
+                <div className="modal-stat-label">เวลาที่ใช้</div>
                 <div className="modal-stat-val">{formatTime(elapsed)}</div>
               </div>
               <div className="modal-stat-box">
-                <div className="modal-stat-label">Mistakes</div>
-                <div className="modal-stat-val" style={{ color: mistakes > 0 ? '#f87171' : '#34d399' }}>
+                <div className="modal-stat-label">วางผิดตำแหน่ง</div>
+                <div className="modal-stat-val" style={{ color: practiceMode ? '#cbd5e1' : mistakes > 0 ? '#f87171' : '#34d399' }}>
                   {mistakes}
                 </div>
               </div>
               <div className="modal-stat-box">
-                <div className="modal-stat-label">Hints Used</div>
-                <div className="modal-stat-val" style={{ color: hintsUsed > 0 ? '#fbbf24' : '#94a3b8' }}>
+                <div className="modal-stat-label">ใช้คำใบ้</div>
+                <div className="modal-stat-val" style={{ color: neutralTextColor || (hintsUsed > 0 ? '#fbbf24' : '#94a3b8') }}>
                   {hintsUsed}
                 </div>
               </div>
@@ -133,20 +148,20 @@ export default function TopNav({ store }) {
 
             <div className="modal-actions">
               <button
-                className="btn btn-primary"
+                className={`btn btn-primary ${practiceMode ? 'btn-practice' : ''}`}
                 style={{ flex: 1 }}
                 onClick={() => {
                   setShowCompletionModal(false);
                   reset();
                 }}
               >
-                Assemble Again
+                เริ่มประกอบใหม่
               </button>
               <button
                 className="btn"
                 onClick={() => setShowCompletionModal(false)}
               >
-                Inspect 3D Rig
+                ดูโมเดล 3 มิติ
               </button>
             </div>
           </div>

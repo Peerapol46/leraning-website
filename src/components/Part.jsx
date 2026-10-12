@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
+import ReferencePart from './ReferencePart';
 
 function CpuMesh({ color, selected, hovered }) {
   return (
@@ -24,51 +25,27 @@ function CpuMesh({ color, selected, hovered }) {
 }
 
 function RamMesh({ color, selected, hovered }) {
+  const moduleColor = selected || hovered ? '#4a90d9' : color;
   return (
     <group>
-      <mesh>
-        <boxGeometry args={[0.65, 0.12, 0.04]} />
-        <meshStandardMaterial
-          color={selected || hovered ? '#4a90d9' : color}
-          metalness={0.4}
-          roughness={0.5}
-        />
-      </mesh>
-      {[-0.22, -0.08, 0.08, 0.22].map((x, i) => (
-        <mesh key={i} position={[x, 0.02, 0.025]}>
-          <boxGeometry args={[0.1, 0.06, 0.01]} />
-          <meshStandardMaterial color="#111" />
-        </mesh>
+      {[-0.15, 0.15].map((z) => (
+        <group key={z} position={[0, 0, z]}>
+          <mesh>
+            <boxGeometry args={[0.65, 0.12, 0.045]} />
+            <meshStandardMaterial color={moduleColor} metalness={0.4} roughness={0.5} />
+          </mesh>
+          {[-0.22, -0.08, 0.08, 0.22].map((x) => (
+            <mesh key={x} position={[x, 0.02, 0.025]}>
+              <boxGeometry args={[0.1, 0.06, 0.01]} />
+              <meshStandardMaterial color="#111" />
+            </mesh>
+          ))}
+          <mesh position={[0, -0.055, 0]}>
+            <boxGeometry args={[0.62, 0.01, 0.035]} />
+            <meshStandardMaterial color="#c9a227" metalness={0.9} roughness={0.15} />
+          </mesh>
+        </group>
       ))}
-      <mesh position={[0, -0.055, 0]}>
-        <boxGeometry args={[0.62, 0.01, 0.035]} />
-        <meshStandardMaterial color="#c9a227" metalness={0.9} roughness={0.15} />
-      </mesh>
-    </group>
-  );
-}
-
-function M2Mesh({ color, selected, hovered }) {
-  return (
-    <group>
-      <mesh>
-        <boxGeometry args={[0.45, 0.02, 0.12]} />
-        <meshStandardMaterial
-          color={selected || hovered ? '#3dd68c' : color}
-          metalness={0.3}
-          roughness={0.6}
-        />
-      </mesh>
-      {[-0.12, 0.05].map((x, i) => (
-        <mesh key={i} position={[x, 0.015, 0]}>
-          <boxGeometry args={[0.12, 0.01, 0.08]} />
-          <meshStandardMaterial color="#222" />
-        </mesh>
-      ))}
-      <mesh position={[-0.21, 0, 0]}>
-        <boxGeometry args={[0.04, 0.015, 0.1]} />
-        <meshStandardMaterial color="#c9a227" metalness={0.8} />
-      </mesh>
     </group>
   );
 }
@@ -139,19 +116,19 @@ function PsuMesh({ color, selected, hovered }) {
   return (
     <group>
       <mesh>
-        <boxGeometry args={[0.75, 0.45, 0.85]} />
+        <boxGeometry args={[0.42, 0.38, 0.72]} />
         <meshStandardMaterial
           color={selected || hovered ? '#3d3846' : color}
           metalness={0.4}
           roughness={0.5}
         />
       </mesh>
-      <mesh position={[0, 0.23, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.18, 0.18, 0.02, 16]} />
+      <mesh position={[0, 0.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.14, 0.14, 0.02, 16]} />
         <meshStandardMaterial color="#111" />
       </mesh>
-      <mesh position={[0, 0, -0.43]}>
-        <boxGeometry args={[0.6, 0.3, 0.02]} />
+      <mesh position={[0, 0, -0.37]}>
+        <boxGeometry args={[0.34, 0.26, 0.02]} />
         <meshStandardMaterial color="#222" />
       </mesh>
     </group>
@@ -209,13 +186,14 @@ function GpuMesh({ color, selected, hovered }) {
 const MESH_MAP = {
   cpu: CpuMesh,
   ram: RamMesh,
-  m2: M2Mesh,
   cooler: CoolerMesh,
   motherboard: MotherboardMesh,
   psu: PsuMesh,
   ssd: SsdMesh,
   gpu: GpuMesh,
 };
+
+const REFERENCE_PART_TYPES = new Set(['ram', 'cooler', 'motherboard', 'psu', 'ssd', 'gpu']);
 
 export default function Part({
   part,
@@ -227,13 +205,11 @@ export default function Part({
   onPointerOver,
   onPointerOut,
 }) {
-  const [hovered, setHovered] = useState(false);
   const MeshComp = MESH_MAP[part.type] || CpuMesh;
 
   const handleOver = (e) => {
     e.stopPropagation();
     if (!installed) {
-      setHovered(true);
       document.body.style.cursor = 'grab';
       onPointerOver?.(part.id);
     }
@@ -241,7 +217,6 @@ export default function Part({
 
   const handleOut = (e) => {
     e.stopPropagation();
-    setHovered(false);
     document.body.style.cursor = 'default';
     onPointerOut?.(part.id);
   };
@@ -260,10 +235,14 @@ export default function Part({
       onPointerOut={handleOut}
       onPointerDown={handleDown}
     >
-      <MeshComp color={part.color} selected={selected} hovered={hovered || isDragging} />
-      {(selected || hovered || isDragging) && !installed && (
-        <mesh scale={[1.08, 1.08, 1.08]}>
-          <boxGeometry args={[0.4, 0.15, 0.4]} />
+      {REFERENCE_PART_TYPES.has(part.type) ? (
+        <ReferencePart type={part.type} size={part.scale} />
+      ) : (
+        <MeshComp color={part.color} selected={selected} hovered={isDragging} />
+      )}
+      {(selected || isDragging) && !installed && (
+        <mesh scale={[1.06, 1.06, 1.06]}>
+          <boxGeometry args={part.scale} />
           <meshBasicMaterial color="#60a5fa" wireframe transparent opacity={0.35} />
         </mesh>
       )}

@@ -80,7 +80,7 @@ export function useAssemblyStore() {
     setHintsUsed((h) => h + 1);
     setScore((s) => Math.max(0, s - 2));
     setShowHint(true);
-    showFeedback('Hint revealed. Check the left panel.', 'info');
+      showFeedback('แสดงคำใบ้แล้ว ดูคำแนะนำทางแถบซ้าย', 'info');
   }, [showFeedback]);
 
   const placePart = useCallback(
@@ -88,6 +88,20 @@ export function useAssemblyStore() {
       const part = PARTS.find((p) => p.id === partId);
       const zone = INSTALL_ZONES.find((z) => z.id === zoneId);
       if (!part || !zone) return false;
+
+      const step = ASSEMBLY_STEPS[currentStepIndex];
+      if (step?.partId && step.partId !== partId) {
+        const nextPart = PARTS.find((item) => item.id === step.partId);
+        setPositions((prev) => ({
+          ...prev,
+          [partId]: [...part.homePosition],
+        }));
+        showFeedback(
+          `ข้ามขั้นตอน: ตอนนี้ต้องติดตั้ง ${nextPart?.name || 'ชิ้นส่วนถัดไป'} ก่อน แล้วจึงติดตั้ง ${part.name}`,
+          'info'
+        );
+        return false;
+      }
 
       const isCorrect = zone.accepts.includes(part.type);
 
@@ -97,24 +111,25 @@ export function useAssemblyStore() {
           ...prev,
           [partId]: [...zone.position],
         }));
-        setInstalled((prev) => {
-          const next = { ...prev, [partId]: true };
-          // Advance step if matching
-          const step = ASSEMBLY_STEPS[currentStepIndex];
-          if (step && step.partId === partId) {
-            setCurrentStepIndex((i) => Math.min(i + 1, ASSEMBLY_STEPS.length - 1));
-          }
-          // Check completion
-          const allInstalled = PARTS.every((p) => next[p.id]);
-          if (allInstalled) {
-            setAssemblyComplete(true);
-            setIsRunning(false);
-            showFeedback('✓ Computer Assembly Completed Successfully', 'success');
-          }
-          return next;
-        });
+        const nextInstalled = { ...installed, [partId]: true };
+        setInstalled(nextInstalled);
+        if (step && step.partId === partId) {
+          setCurrentStepIndex((i) => Math.min(i + 1, ASSEMBLY_STEPS.length - 1));
+        }
+        const allInstalled = PARTS.every((p) => nextInstalled[p.id]);
+        if (allInstalled) {
+          setAssemblyComplete(true);
+          setIsRunning(false);
+          showFeedback(
+            'ประกอบคอมพิวเตอร์ครบทุกชิ้นแล้ว',
+            mode === 'practice' ? 'info' : 'success'
+          );
+        }
         setScore((s) => Math.min(100, s + 5));
-        showFeedback(`✓ Correct! The ${part.name} has been installed in the ${zone.label}.`, 'success');
+        showFeedback(
+          `ติดตั้ง ${part.name} ที่ ${zone.label} เรียบร้อยแล้ว`,
+          mode === 'practice' ? 'info' : 'success'
+        );
         return true;
       } else {
         // Incorrect
@@ -126,13 +141,15 @@ export function useAssemblyStore() {
           [partId]: [...part.homePosition],
         }));
         showFeedback(
-          `✕ Incorrect location. The ${part.name} cannot be installed in ${zone.label}.`,
-          'error'
+          mode === 'practice'
+            ? `ช่องนี้ไม่ใช่ตำแหน่งของ ${part.name} ลองวางในช่องที่ตรงกัน`
+            : `ตำแหน่งไม่ถูกต้อง: วาง ${part.name} ที่ ${zone.label} ไม่ได้ ลองใหม่อีกครั้ง`,
+          mode === 'practice' ? 'info' : 'error'
         );
         return false;
       }
     },
-    [currentStepIndex, showFeedback]
+    [currentStepIndex, installed, mode, showFeedback]
   );
 
   const returnHome = useCallback((partId) => {

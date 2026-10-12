@@ -11,21 +11,21 @@ export class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('3D Workspace Error:', error, errorInfo)
+    console.error('เกิดข้อผิดพลาดในพื้นที่ 3 มิติ:', error, errorInfo)
   }
 
   render() {
     if (this.state.hasError) {
       return (
         <div className="error-box">
-          <h2>Unable to load the 3D workspace.</h2>
-          <p style={{ fontSize: '0.875rem', color: '#94a3b8' }}>Error:</p>
+          <h2>เปิดพื้นที่ 3 มิติไม่ได้</h2>
+          <p style={{ fontSize: '0.875rem', color: '#94a3b8' }}>รายละเอียดข้อผิดพลาด:</p>
           <pre>{this.state.error?.message || String(this.state.error)}</pre>
           <button
             className="btn"
             onClick={() => this.setState({ hasError: false, error: null })}
           >
-            Try Again
+            ลองอีกครั้ง
           </button>
         </div>
       )
