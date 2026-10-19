@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 const QUESTION_BANKS = {
   assembly: {
@@ -62,7 +62,7 @@ const QUIZ_TOPICS = [
 
 const HOME_CARDS = [
   { id: 'assembly', icon: '🖥️', number: '01', title: 'ฝึกประกอบคอม', description: 'เรียนรู้ตำแหน่งอุปกรณ์และฝึกประกอบคอมพิวเตอร์ในห้อง 3 มิติ', action: 'เริ่มประกอบ', theme: 'assembly-card' },
-  { id: 'windows', icon: '💿', number: '02', title: 'ฝึกลง Windows', description: 'ฝึกตามขั้นตอนตั้งแต่เตรียม USB จนถึงการตั้งค่า Windows ครั้งแรก', action: 'เริ่มฝึกติดตั้ง', theme: 'windows-card' },
+  { id: 'windows', icon: '💿', number: '02', title: 'ฝึกลง Windows', description: 'ฝึกตั้งแต่เตรียม USB จนถึงการตั้งค่า Windows ครั้งแรก', action: 'เริ่มฝึกติดตั้ง', theme: 'windows-card' },
   { id: 'pretest', icon: '📝', number: '03', title: 'ก่อนเรียน', description: 'เลือกบทประกอบคอมหรือติดตั้ง Windows บทละ 10 ข้อ', action: 'ทำแบบทดสอบ', theme: 'pretest-card' },
   { id: 'posttest', icon: '🎓', number: '04', title: 'หลังเรียน', description: 'เลือกบทประกอบคอมหรือติดตั้ง Windows บทละ 10 ข้อ', action: 'ทำแบบทดสอบ', theme: 'posttest-card' },
 ]
@@ -70,7 +70,7 @@ const HOME_CARDS = [
 export function HomePage({ onNavigate }) {
   return <main className="home-page">
     <section className="home-hero">
-      <div className="home-hero-copy"><span className="eyebrow">บทเรียนคอมพิวเตอร์แบบลงมือทำ</span><h1>เรียนรู้คอมพิวเตอร์<br /><span>ทีละขั้นตอน</span></h1><p>เริ่มจากทำแบบทดสอบก่อนเรียน ฝึกประกอบคอมและติดตั้ง Windows แล้วกลับมาทดสอบความเข้าใจอีกครั้ง</p><button className="learning-btn" onClick={() => onNavigate('pretest')}>เริ่มจากแบบทดสอบก่อนเรียน →</button></div>
+      <div className="home-hero-copy"><span className="eyebrow">บทเรียนคอมพิวเตอร์แบบลงมือทำ</span><h1>เรียนรู้คอมพิวเตอร์<br /><span>ทีละขั้นตอน</span></h1><p>ทำแบบทดสอบก่อนเรียน ฝึกประกอบคอมและติดตั้ง Windows แล้วกลับมาทดสอบความเข้าใจอีกครั้ง</p><button className="learning-btn" onClick={() => onNavigate('pretest')}>เริ่มจากแบบทดสอบก่อนเรียน →</button></div>
       <div className="home-hero-art" aria-hidden="true"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="hero-device">🖥️</div><span className="floating-chip chip-cpu">CPU</span><span className="floating-chip chip-ram">RAM</span><span className="floating-chip chip-ssd">SSD</span></div>
     </section>
     <section className="home-courses"><div className="home-section-title"><div><span className="eyebrow">เลือกบทเรียน</span><h2>เริ่มฝึกได้เลย</h2></div><span className="course-count">4 บทเรียน</span></div><div className="course-grid">{HOME_CARDS.map((card) => <button key={card.id} className={`course-card ${card.theme}`} onClick={() => onNavigate(card.id)}><div className="course-art"><span className="course-number">{card.number}</span><span className="course-illustration" aria-hidden="true">{card.icon}</span><span className="course-art-glow" /></div><div className="course-content"><h3>{card.title}</h3><p>{card.description}</p><span className="course-action">{card.action} <span aria-hidden="true">→</span></span></div></button>)}</div></section>
@@ -78,36 +78,117 @@ export function HomePage({ onNavigate }) {
   </main>
 }
 
-export function LearningPage({ type }) {
+export function LearningPage({ type, onQuizComplete }) {
   const isPre = type === 'pretest'
+  const [identityForm, setIdentityForm] = useState({ name: '', number: '', room: '' })
+  const [quizStudent, setQuizStudent] = useState(null)
+  const [identityError, setIdentityError] = useState('')
   const [topic, setTopic] = useState(null)
   const questions = topic ? QUESTION_BANKS[topic][type] : []
   const [index, setIndex] = useState(0)
   const [selected, setSelected] = useState(null)
   const [score, setScore] = useState(0)
   const [finished, setFinished] = useState(false)
-  const resetQuiz = () => { setIndex(0); setSelected(null); setScore(0); setFinished(false) }
+  const [recordState, setRecordState] = useState('idle')
+  const [recordError, setRecordError] = useState('')
+
+  const resetQuiz = () => {
+    setIndex(0)
+    setSelected(null)
+    setScore(0)
+    setFinished(false)
+    setRecordState('idle')
+    setRecordError('')
+  }
   const startTopic = (topicId) => { setTopic(topicId); resetQuiz() }
   const restart = () => resetQuiz()
   const changeTopic = () => { setTopic(null); resetQuiz() }
+  const changeIdentity = () => { setQuizStudent(null); setTopic(null); resetQuiz() }
+  const submitIdentity = (event) => {
+    event.preventDefault()
+    const student = {
+      name: identityForm.name.trim(),
+      number: identityForm.number.trim(),
+      room: identityForm.room.trim(),
+    }
+    if (Object.values(student).some((value) => !value)) {
+      setIdentityError('กรอกข้อมูลให้ครบทุกช่อง')
+      return
+    }
+    setQuizStudent(student)
+    setIdentityError('')
+  }
   const answer = (choice) => {
     if (selected !== null) return
     setSelected(choice)
     if (choice === questions[index].answer) setScore((value) => value + 1)
   }
   const next = () => {
-    if (index === questions.length - 1) setFinished(true)
-    else { setIndex((value) => value + 1); setSelected(null) }
+    if (index === questions.length - 1) {
+      setFinished(true)
+      setRecordState('saving')
+      Promise.resolve()
+        .then(() => onQuizComplete?.({ testType: type, topic, score, maxScore: questions.length, student: quizStudent }))
+        .then(() => setRecordState('submitted'))
+        .catch((error) => { setRecordState('error'); setRecordError(error.message || 'ส่งคะแนนไม่สำเร็จ') })
+    } else {
+      setIndex((value) => value + 1)
+      setSelected(null)
+    }
   }
 
   return <main className="learning-page">
     <section className="learning-hero">
       <span className="eyebrow">{isPre ? 'เริ่มต้นการเรียนรู้' : 'ทบทวนสิ่งที่เรียนรู้'}</span>
       <h1>{isPre ? 'แบบทดสอบก่อนเรียน' : 'แบบทดสอบหลังเรียน'}</h1>
-      <p>{isPre ? 'เลือกบทเรียนเพื่อสำรวจความรู้พื้นฐาน ก่อนเริ่มฝึกบทนั้น' : 'เลือกบทเรียนเพื่อวัดความเข้าใจหลังเรียนจบ แต่ละบทมี 10 ข้อ'}</p>
+      <p>{isPre ? 'เลือกบทเรียนเพื่อสำรวจความรู้พื้นฐาน ก่อนเริ่มบทนั้น' : 'เลือกบทเรียนเพื่อวัดความเข้าใจหลังเรียนจบ แต่ละบทมี 10 ข้อ'}</p>
     </section>
     <section className="quiz-card" aria-live="polite">
-      {!topic ? <div className="quiz-topic-screen"><div className="quiz-topic-heading"><span className="eyebrow">เลือกบทเรียน</span><h2>ต้องการทดสอบเรื่องใด?</h2><p>แต่ละบทมี 10 ข้อ พร้อมคำอธิบายหลังเลือกคำตอบ</p></div><div className="quiz-topic-grid">{QUIZ_TOPICS.map((item) => <button type="button" key={item.id} className={`quiz-topic-card ${item.theme}`} onClick={() => startTopic(item.id)}><span className="quiz-topic-icon" aria-hidden="true">{item.icon}</span><span className="quiz-topic-copy"><strong>{item.title}</strong><small>{item.description}</small></span><span className="quiz-topic-count">10 ข้อ <b>→</b></span></button>)}</div></div> : finished ? <div className="quiz-result"><div className="result-icon">{score >= 8 ? '🏆' : '✨'}</div><span className="eyebrow">{QUIZ_TOPICS.find((item) => item.id === topic).title} · ทำแบบทดสอบเสร็จแล้ว</span><h2>คุณได้ {score} / {questions.length} คะแนน</h2><p>{score >= 8 ? 'ยอดเยี่ยม! คุณเข้าใจเนื้อหาบทนี้ได้ดีมาก' : 'ลองทบทวนบทนี้ แล้วกลับมาทำแบบทดสอบอีกครั้งได้เลย'}</p><div className="quiz-result-actions"><button className="learning-btn" onClick={restart}>ทำบทนี้อีกครั้ง</button><button className="learning-btn secondary" onClick={changeTopic}>เลือกบทเรียนอื่น</button></div></div> : <>
+      {!quizStudent ? <form className="quiz-identity-form" noValidate onSubmit={submitIdentity}>
+        <div className="quiz-topic-heading">
+          <span className="eyebrow">ข้อมูลสำหรับบันทึกคะแนน</span>
+          <h2>ก่อนเริ่มทำแบบทดสอบ</h2>
+          <p>กรอกข้อมูลผู้ทำแบบทดสอบ ระบบจะใช้ข้อมูลนี้บันทึกคะแนน โดยไม่ต้องสมัครสมาชิก</p>
+        </div>
+        <div className="registration-fields">
+          <label className="registration-field registration-field-wide">
+            <span>ชื่อ–นามสกุล</span>
+            <input autoComplete="name" name="name" value={identityForm.name} onChange={(event) => setIdentityForm((current) => ({ ...current, name: event.target.value }))} required maxLength={120} placeholder="เช่น เด็กชายสมชาย ใจดี" />
+          </label>
+          <label className="registration-field">
+            <span>เลขที่</span>
+            <input inputMode="numeric" name="number" value={identityForm.number} onChange={(event) => setIdentityForm((current) => ({ ...current, number: event.target.value }))} required maxLength={20} placeholder="เลขที่ในห้อง" />
+          </label>
+          <label className="registration-field">
+            <span>ห้อง</span>
+            <select name="room" value={identityForm.room} onChange={(event) => setIdentityForm((current) => ({ ...current, room: event.target.value }))} required>
+              <option value="" disabled>เลือกห้อง</option>
+              <option value="DBT 2.1">DBT 2.1</option>
+              <option value="DBT 2.2">DBT 2.2</option>
+              <option value="DBT 2.3">DBT 2.3</option>
+              <option value="DBT 2.4">DBT 2.4</option>
+            </select>
+          </label>
+        </div>
+        {identityError && <p className="registration-error" role="alert">{identityError}</p>}
+        <div className="registration-footer">
+          <p>ระบบบันทึกเฉพาะข้อมูลที่ใช้ระบุผู้ทำแบบทดสอบและคะแนน</p>
+          <button className="learning-btn" type="submit">ไปเลือกแบบทดสอบ</button>
+        </div>
+      </form> : !topic ? <div className="quiz-topic-screen">
+        <div className="quiz-topic-heading"><span className="eyebrow">เลือกบทเรียน</span><h2>ต้องการทดสอบเรื่องใด?</h2><p>แต่ละบทมี 10 ข้อ พร้อมคำอธิบายหลังเลือกคำตอบ</p></div>
+        <div className="quiz-student-summary"><span>{quizStudent.name} · เลขที่ {quizStudent.number} · {quizStudent.room}</span><button type="button" onClick={changeIdentity}>แก้ไขข้อมูล</button></div>
+        <div className="quiz-topic-grid">{QUIZ_TOPICS.map((item) => <button type="button" key={item.id} className={`quiz-topic-card ${item.theme}`} onClick={() => startTopic(item.id)}><span className="quiz-topic-icon" aria-hidden="true">{item.icon}</span><span className="quiz-topic-copy"><strong>{item.title}</strong><small>{item.description}</small></span><span className="quiz-topic-count">10 ข้อ <b>→</b></span></button>)}</div>
+      </div> : finished ? <div className="quiz-result">
+        <div className="result-icon">{score >= 8 ? '🏆' : '✨'}</div>
+        <span className="eyebrow">{QUIZ_TOPICS.find((item) => item.id === topic).title} · ทำแบบทดสอบเสร็จแล้ว</span>
+        <h2>คุณได้ {score} / {questions.length} คะแนน</h2>
+        <p>{score >= 8 ? 'ยอดเยี่ยม! คุณเข้าใจเนื้อหาบทนี้ได้ดีมาก' : 'ลองทบทวนบทนี้ แล้วกลับมาทำแบบทดสอบอีกครั้งได้เลย'}</p>
+        {recordState === 'saving' && <p className="quiz-save-status">กำลังส่งคะแนนไปยัง Google Sheets…</p>}
+        {recordState === 'submitted' && <p className="quiz-save-status success">ส่งคำขอบันทึกคะแนนแล้ว</p>}
+        {recordState === 'error' && <p className="quiz-save-status error" role="alert">{recordError}</p>}
+        <div className="quiz-result-actions"><button className="learning-btn" onClick={restart}>ทำบทนี้อีกครั้ง</button><button className="learning-btn secondary" onClick={changeTopic}>เลือกบทเรียนอื่น</button></div>
+      </div> : <>
         <div className="quiz-active-topic"><span>{QUIZ_TOPICS.find((item) => item.id === topic).icon} {QUIZ_TOPICS.find((item) => item.id === topic).title}</span><button type="button" onClick={changeTopic}>เปลี่ยนบทเรียน</button></div>
         <div className="quiz-progress-row"><span>ข้อ {index + 1} จาก {questions.length}</span><span>คะแนน {score}</span></div>
         <div className="quiz-progress"><span style={{ width: `${((index + 1) / questions.length) * 100}%` }} /></div>
@@ -117,7 +198,7 @@ export function LearningPage({ type }) {
         <div className="quiz-footer"><span>เลือกคำตอบที่ถูกต้องเพื่อไปต่อ</span><button className="learning-btn" onClick={next} disabled={selected === null}>{index === questions.length - 1 ? 'ดูผลคะแนน' : 'ข้อต่อไป →'}</button></div>
       </>}
     </section>
-    <p className="learning-note">แบบทดสอบนี้ใช้เพื่อการเรียนรู้ คะแนนจะแสดงบนอุปกรณ์นี้เท่านั้น</p>
+    <p className="learning-note">คะแนนจะถูกบันทึกในชีต “{isPre ? 'แบบทดสอบก่อนเรียน' : 'แบบทดสอบหลังเรียน'}” พร้อมชื่อ เลขที่ ห้อง บทเรียน และคะแนน</p>
   </main>
 }
 

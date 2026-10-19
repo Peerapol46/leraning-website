@@ -64,6 +64,7 @@ function DragController({
       if (store.installed[partId]) return;
       e.stopPropagation();
       dragPartId.current = partId;
+      store.startTimer();
       store.setDraggingPartId(partId);
       store.setIsDragging(true);
       store.setSelectedPartId(partId);

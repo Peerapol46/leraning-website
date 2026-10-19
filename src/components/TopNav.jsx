@@ -2,9 +2,9 @@ import React from 'react';
 
 const NAV_ITEMS = [
   ['home', '⌂', 'หน้าแรก'],
-  ['assembly', '🧩', 'ประกอบคอม'],
   ['pretest', '📝', 'แบบทดสอบก่อนเรียน'],
   ['posttest', '🎓', 'แบบทดสอบหลังเรียน'],
+  ['assembly', '🧩', 'ประกอบคอม'],
   ['windows', '💿', 'ฝึกติดตั้ง Windows'],
 ]
 

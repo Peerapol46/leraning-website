@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const SIM_STEPS = [
   'กด F12 เพื่อเปิด UEFI Boot Menu',
@@ -114,7 +114,8 @@ const formatPartitionSize = (mb) => mb >= 1024
   ? (mb / 1024).toFixed(1) + ' GB'
   : mb.toFixed(1) + ' MB'
 
-export default function WindowsPractice() {
+export default function WindowsPractice({ onComplete }) {
+  const startedAtRef = useRef(Date.now())
   const [step, setStep] = useState(0)
   const [mode, setMode] = useState('learning')
   const [showHint, setShowHint] = useState(false)
@@ -318,7 +319,9 @@ export default function WindowsPractice() {
       })
       return result
     })
-    setSelectedPartitionId(newPartition.id)
+    setSelectedPartitionId(step === 11 && windowsPartitionId && partitions.some((partition) => partition.id === windowsPartitionId)
+      ? windowsPartitionId
+      : newPartition.id)
     setPartitionDialog(null)
     setError(step === 11 ? '' : 'สร้างพาร์ทิชัน ' + newPartition.name + ' ขนาด ' + formatSize(size) + ' แล้ว')
     if (step === 11) setStep(12)
@@ -414,6 +417,7 @@ export default function WindowsPractice() {
       if (accountPassword !== confirmPassword) { reportMistake('รหัสผ่านทั้งสองช่องไม่ตรงกัน ตรวจและกรอกใหม่'); return }
       if (accountPassword && !passwordHint.trim()) { reportMistake('เพิ่ม Password hint เพื่อช่วยจำรหัสผ่านก่อนกด Next'); return }
       setStep(20)
+      onComplete?.({ elapsedSeconds: Math.floor((Date.now() - startedAtRef.current) / 1000) })
       return
     }
     if (step === 20) { reset(); return }
@@ -466,6 +470,7 @@ export default function WindowsPractice() {
   }
 
   const reset = () => {
+    startedAtRef.current = Date.now()
     setStep(0)
     setMode('learning')
     setShowHint(false)

@@ -25,7 +25,8 @@ export function useAssemblyStore() {
   const [isPoweredOn, setIsPoweredOn] = useState(false);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
   const [elapsed, setElapsed] = useState(0);
-  const [isRunning, setIsRunning] = useState(true);
+  const [isRunning, setIsRunning] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -73,6 +74,12 @@ export function useAssemblyStore() {
     setIsPoweredOn(false);
     setShowCompletionModal(false);
     setElapsed(0);
+    setHasStarted(false);
+    setIsRunning(false);
+  }, []);
+
+  const startTimer = useCallback(() => {
+    setHasStarted(true);
     setIsRunning(true);
   }, []);
 
@@ -193,6 +200,9 @@ export function useAssemblyStore() {
     showHint,
     setShowHint,
     elapsed,
+    hasStarted,
+    setTimerRunning: setIsRunning,
+    startTimer,
     formatTime,
     progress,
     reset,

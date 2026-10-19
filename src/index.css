@@ -55,7 +55,7 @@ button { cursor: pointer; font-family: inherit; }
 .home-page { flex: 1; min-height: 0; overflow: auto; padding: 0 clamp(18px, 6vw, 80px); background: radial-gradient(ellipse at 76% 8%, rgba(8, 47, 73, .32), transparent 34%), #0a0e1a; }
 .home-hero { position: relative; width: min(1120px,100%); min-height: 300px; margin: 0 auto; padding: 34px 5px 28px; display: grid; grid-template-columns: 1fr .85fr; align-items: center; gap: 24px; border-bottom: 1px solid rgba(51,65,85,.45); }
 .home-hero-copy { position: relative; z-index: 1; }
-.home-hero-copy h1 { margin: 10px 0 12px; color: #f8fafc; font-size: clamp(2rem,4vw,3.2rem); line-height: 1.13; letter-spacing: -.04em; }
+.home-hero-copy h1 { margin: 10px 0 12px; color: #f8fafc; font-size: clamp(2rem,4vw,3.2rem); line-height: 1.36; letter-spacing: -.04em; }
 .home-hero-copy h1 span { color: #22d3ee; }
 .home-hero-copy p { width: min(520px,100%); margin-bottom: 20px; color: #94a3b8; font-size: .9rem; line-height: 1.75; }
 .home-hero-art { position: relative; height: 235px; display: grid; place-items: center; overflow: hidden; }
@@ -140,6 +140,36 @@ button { cursor: pointer; font-family: inherit; }
 .quiz-result p { color: #94a3b8; margin-bottom: 22px; }
 .quiz-result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .learning-note { width: min(760px,100%); margin: 14px auto 0; color: #64748b; font-size: .72rem; line-height: 1.5; }
+.quiz-identity-form { width: min(600px,100%); margin: 0 auto; }
+.quiz-student-summary { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin: -4px 0 18px; padding: 10px 12px; color: #cbd5e1; background: rgba(8,47,73,.25); border: 1px solid rgba(34,211,238,.18); border-radius: 9px; font-size: .75rem; }
+.quiz-student-summary button { flex: 0 0 auto; padding: 5px 8px; color: #bae6fd; background: transparent; border: 1px solid rgba(71,85,105,.55); border-radius: 6px; font-size: .68rem; }
+.quiz-student-summary button:hover,.quiz-student-summary button:focus-visible { color: #fff; border-color: #38bdf8; outline: none; }
+.registration-page { display: flex; flex-direction: column; align-items: center; }
+.registration-card { width: min(680px,100%); margin: 0 auto; padding: clamp(20px,4vw,32px); border: 1px solid rgba(71,85,105,.48); border-radius: 18px; background: linear-gradient(145deg,rgba(15,23,42,.97),rgba(15,23,42,.78)); box-shadow: 0 24px 70px rgba(0,0,0,.25); }
+.registration-card-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+.registration-icon { width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid rgba(34,211,238,.24); border-radius: 13px; background: rgba(8,145,178,.14); font-size: 1.5rem; }
+.registration-card-heading h2 { margin-bottom: 4px; color: #f1f5f9; font-size: 1.05rem; }
+.registration-card-heading p { color: #94a3b8; font-size: .76rem; }
+.registration-notice { padding: 12px 14px; margin-bottom: 18px; border: 1px solid rgba(245,158,11,.3); border-radius: 9px; background: rgba(120,53,15,.16); color: #fde68a; font-size: .78rem; line-height: 1.55; }
+.registration-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.registration-field { display: grid; gap: 7px; min-width: 0; color: #cbd5e1; font-size: .78rem; font-weight: 650; }
+.registration-field-wide { grid-column: 1 / -1; }
+.registration-field input,.registration-field select { width: 100%; min-height: 44px; padding: 10px 12px; color: #f1f5f9; border: 1px solid rgba(71,85,105,.7); border-radius: 9px; outline: none; background: rgba(2,6,23,.9); font: inherit; font-weight: 400; }
+.registration-field select { cursor: pointer; }
+.registration-field select option { color: #f1f5f9; background: #0f172a; }
+.registration-field input::placeholder { color: #64748b; }
+.registration-field input:focus,.registration-field select:focus { border-color: #22d3ee; box-shadow: 0 0 0 3px rgba(34,211,238,.12); }
+.registration-footer { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(71,85,105,.38); }
+.registration-footer p { max-width: 360px; color: #64748b; font-size: .7rem; line-height: 1.55; }
+.registration-footer .learning-btn { flex: 0 0 auto; }
+.learning-btn:disabled { opacity: .45; cursor: not-allowed; }
+.registration-error { margin-top: 14px; color: #fca5a5; font-size: .78rem; }
+.quiz-save-status { margin: 0 0 18px !important; color: #fde68a !important; font-size: .78rem; }
+.quiz-save-status.success { color: #6ee7b7 !important; }
+.quiz-save-status.error { color: #fca5a5 !important; }
+.sheet-notice { position: fixed; right: 20px; bottom: 20px; z-index: 100; display: flex; align-items: center; gap: 16px; max-width: min(440px,calc(100vw - 32px)); padding: 12px 14px; border: 1px solid rgba(34,211,238,.3); border-radius: 10px; background: rgba(15,23,42,.97); color: #bae6fd; box-shadow: 0 12px 35px rgba(0,0,0,.38); font-size: .78rem; line-height: 1.5; }
+.sheet-notice.error { color: #fecaca; border-color: rgba(248,113,113,.38); }
+.sheet-notice button { flex: 0 0 auto; border: 0; color: #94a3b8; background: none; font-size: 1.2rem; }
 .windows-layout { width: min(1000px,100%); margin: 0 auto; display: grid; grid-template-columns: minmax(240px,.8fr) minmax(0,1.2fr); gap: 18px; }
 .windows-steps { display: flex; flex-direction: column; gap: 8px; }
 .windows-step { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px; text-align: left; color: #cbd5e1; background: rgba(15,23,42,.78); border: 1px solid rgba(71,85,105,.42); border-radius: 11px; transition: .15s ease; }
@@ -627,6 +657,11 @@ button { cursor: pointer; font-family: inherit; }
   .quiz-footer .learning-btn { width: 100%; }
   .quiz-topic-grid { grid-template-columns: 1fr; }
   .quiz-topic-card { min-height: 120px; }
+  .registration-fields { grid-template-columns: 1fr; }
+  .registration-field-wide { grid-column: auto; }
+  .registration-footer { align-items: stretch; flex-direction: column; }
+  .registration-footer .learning-btn { width: 100%; }
+  .sheet-notice { right: 12px; bottom: 12px; }
   .quiz-result-actions { width: 100%; flex-direction: column; }
   .quiz-result-actions .learning-btn { width: 100%; }
   .windows-controls .learning-btn { padding: 9px 11px; font-size: .75rem; }
