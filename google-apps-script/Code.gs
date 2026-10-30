@@ -1,6 +1,6 @@
 const SHEET_HEADERS = {
-  'แบบทดสอบก่อนเรียน': ['วันที่บันทึก', 'ชื่อ', 'เลขที่', 'ห้อง', 'บทเรียน', 'คะแนนที่ได้', 'คะแนนเต็ม'],
-  'แบบทดสอบหลังเรียน': ['วันที่บันทึก', 'ชื่อ', 'เลขที่', 'ห้อง', 'บทเรียน', 'คะแนนที่ได้', 'คะแนนเต็ม'],
+  'แบบทดสอบก่อนเรียน': ['วันที่บันทึก', 'ชื่อ', 'เลขที่', 'ห้อง', 'บทเรียน', 'คะแนนที่ได้', 'คะแนนเต็ม', 'รหัสรายการ'],
+  'แบบทดสอบหลังเรียน': ['วันที่บันทึก', 'ชื่อ', 'เลขที่', 'ห้อง', 'บทเรียน', 'คะแนนที่ได้', 'คะแนนเต็ม', 'รหัสรายการ'],
 }
 
 function setupSheets() {
@@ -18,8 +18,13 @@ function doPost(event) {
   try {
     lock.waitLock(10000)
     const request = JSON.parse(event?.postData?.contents || '{}')
+    const requestId = String(request.requestId || Utilities.getUuid())
+    if (!/^[A-Za-z0-9_-]{8,100}$/.test(requestId)) throw new Error('รหัสรายการไม่ถูกต้อง')
+    if (findReceipt_(requestId)) return jsonResponse_({ ok: true, requestId })
+    request.requestId = requestId
+    if (request.action !== 'saveQuizRecord') throw new Error('รองรับการบันทึกเฉพาะแบบทดสอบก่อนเรียนและหลังเรียน')
     const result = saveQuizRecord_(request)
-    return jsonResponse_({ ok: true, ...result })
+    return jsonResponse_({ ok: true, requestId, ...result })
   } catch (error) {
     return jsonResponse_({ ok: false, error: String(error?.message || error) })
   } finally {
@@ -44,7 +49,7 @@ function saveQuizRecord_(request) {
 
   getSheet_(sheetName).appendRow([
     new Date(), safeCell_(student.name), safeCell_(student.number),
-    safeCell_(student.room), topic, score, maxScore,
+    safeCell_(student.room), topic, score, maxScore, request.requestId,
   ])
   return { action: 'saveQuizRecord', sheet: sheetName }
 }
@@ -65,7 +70,7 @@ function getSheet_(name, selectedSpreadsheet) {
   if (!spreadsheet) throw new Error('กรุณารัน setupSheets จาก Google Sheet ที่ต้องการใช้ก่อน')
   let sheet = spreadsheet.getSheetByName(name)
   if (!sheet) sheet = spreadsheet.insertSheet(name)
-  if (sheet.getLastRow() === 0) sheet.appendRow(SHEET_HEADERS[name])
+  sheet.getRange(1, 1, 1, SHEET_HEADERS[name].length).setValues([SHEET_HEADERS[name]])
   return sheet
 }
 
@@ -78,3 +83,27 @@ function jsonResponse_(value) {
   return ContentService.createTextOutput(JSON.stringify(value))
     .setMimeType(ContentService.MimeType.JSON)
 }
+
+
+function doGet(event) {
+  const requestId = String(event?.parameter?.requestId || '')
+  const callback = String(event?.parameter?.callback || '')
+  if (!/^[A-Za-z0-9_-]{8,100}$/.test(requestId) || !/^__sheetReceipt_[A-Za-z0-9_]+$/.test(callback)) return jsonResponse_({ ok: false })
+  let ok = false
+  try { ok = findReceipt_(requestId) } catch (_) {}
+  // Receipt exposes only whether this random record ID was stored, never student data.
+  return ContentService.createTextOutput(callback + '(' + JSON.stringify({ ok, requestId }) + ');').setMimeType(ContentService.MimeType.JAVASCRIPT)
+}
+
+function findReceipt_(requestId) {
+  const id = PropertiesService.getScriptProperties().getProperty('TARGET_SPREADSHEET_ID')
+  if (!id) return false
+  const spreadsheet = SpreadsheetApp.openById(id)
+  return Object.keys(SHEET_HEADERS).some((name) => {
+    const sheet = spreadsheet.getSheetByName(name)
+    if (!sheet || sheet.getLastRow() < 2) return false
+    const column = SHEET_HEADERS[name].length
+    return !!sheet.getRange(2, column, sheet.getLastRow() - 1, 1).createTextFinder(requestId).matchEntireCell(true).findNext()
+  })
+}
+

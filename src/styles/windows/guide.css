@@ -1,0 +1,126 @@
+/* Original Thai installation guide embedded in the practice app. */
+.sim-open-guide { width: fit-content; padding: 0; color: #67e8f9; background: transparent; border: 0; border-radius: 0; font: inherit; text-align: left; cursor: pointer; }
+.sim-open-guide:hover,.sim-open-guide:focus-visible,.learning-note-link:hover,.learning-note-link:focus-visible { color: #a5f3fc; text-decoration: underline; outline: none; }
+.learning-note-link { padding: 0; color: #38bdf8; background: transparent; border: 0; font: inherit; text-decoration: underline; cursor: pointer; }
+.manual-guide-backdrop { position: fixed; z-index: 1000; inset: 0; display: grid; place-items: center; padding: 20px; background: #f4f6f9; backdrop-filter: blur(5px); }
+.manual-guide-dialog { width: min(1100px,100%); height: min(860px,88vh); min-height: 440px; display: flex; flex-direction: column; overflow: hidden; color: #e5edf7; background: #0c1524; border: 1px solid #334155; border-radius: 16px; box-shadow: 0 3px 12px rgba(24,39,60,.05); }
+.manual-guide-header { flex: 0 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 22px 26px 18px; background: #f7f9fc; border-bottom: 1px solid #26354a; }
+.manual-guide-eyebrow { color: #175cd3; font-size: 0.8rem; font-weight: 700; letter-spacing: .06em; }
+.manual-guide-header h2 { margin: 5px 0 4px; color: #182538; font-size: 1.22rem; }
+.manual-guide-header p { margin: 0; color: #9fb0c5; font-size: 0.8rem; line-height: 1.5; }
+.manual-guide-close { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; padding: 0 0 3px; color: #344256; background: #ffffff; border: 1px solid #3b4a60; border-radius: 8px; font: 24px/1 'Segoe UI',Arial,sans-serif; }
+.manual-guide-close:hover,.manual-guide-close:focus-visible { color: #fff; background: #334155; outline: 2px solid #38bdf8; outline-offset: 1px; }
+.manual-guide-layout { min-height: 0; flex: 1 1 auto; display: grid; grid-template-columns: 245px minmax(0,1fr); }
+.manual-guide-toc { display: flex; flex-direction: column; gap: 5px; overflow-y: auto; padding: 18px 12px; background: #0a1220; border-right: 1px solid #26354a; }
+.manual-guide-toc > strong { margin: 0 8px 8px; color: #91a3ba; font-size: 0.8rem; text-transform: uppercase; letter-spacing: .08em; }
+.manual-guide-toc button { display: grid; justify-items: start; gap: 3px; padding: 9px 10px; color: #d1dbe8; background: transparent; border: 1px solid transparent; border-radius: 8px; font: inherit; font-size: 0.8rem; text-align: left; }
+.manual-guide-toc button span { color: #7c91aa; font-size: 0.8rem; }
+.manual-guide-toc button:hover,.manual-guide-toc button:focus-visible { color: #fff; background: #14263b; border-color: #294462; outline: none; }
+.manual-guide-content { min-height: 0; overflow-y: auto; padding: 22px clamp(18px,4vw,42px) 36px; scroll-behavior: smooth; }
+.manual-guide-section { max-width: 740px; padding: 8px 0 24px; margin: 0 0 15px; border-bottom: 1px solid #26354a; scroll-margin-top: 15px; }
+.manual-guide-section-kicker { display: inline-block; margin-bottom: 5px; color: #175cd3; font-size: 0.8rem; font-weight: 700; }
+.manual-guide-section h3 { margin: 0 0 8px; color: #182538; font-size: 1.02rem; }
+.manual-guide-section > p { margin: 0 0 10px; color: #b7c5d7; font-size: 0.8rem; line-height: 1.7; }
+.manual-guide-section ul { display: grid; gap: 7px; padding-left: 19px; margin: 8px 0 0; color: #d0d9e5; font-size: 0.8rem; line-height: 1.65; }
+.manual-guide-section li::marker { color: #38bdf8; }
+.manual-guide-section .manual-guide-note { margin: 13px 0 0; padding: 10px 12px; color: #f4ddb0; background: rgba(146,91,17,.16); border-left: 3px solid #d6a94f; border-radius: 0 6px 6px 0; }
+.manual-guide-note strong { display: block; margin-bottom: 3px; color: #facc70; font-size: 0.8rem; }
+.manual-guide-sources { max-width: 740px; display: grid; justify-items: start; gap: 8px; padding: 8px 0 0; color: #d0d9e5; font-size: 0.8rem; }
+.manual-guide-sources > strong { color: #182538; font-size: 0.82rem; }
+.manual-guide-sources p { margin: 0; color: #9fb0c5; line-height: 1.6; }
+.manual-guide-sources a { color: #67d7f0; text-decoration: underline; }
+.manual-guide-sources .manual-guide-support-note { margin-top: 4px; padding: 9px 11px; color: #d7e5f4; background: #142235; border-radius: 7px; }
+@media (max-width: 700px) {
+  .manual-guide-backdrop { padding: 8px; }
+  .manual-guide-dialog { height: 94vh; min-height: 0; border-radius: 12px; }
+  .manual-guide-header { padding: 16px 15px 13px; }
+  .manual-guide-header h2 { max-width: 280px; font-size: 1rem; }
+  .manual-guide-header p { max-width: 320px; font-size: 0.8rem; }
+  .manual-guide-layout { display: flex; flex-direction: column; }
+  .manual-guide-toc { flex: 0 0 auto; flex-direction: row; overflow-x: auto; overflow-y: hidden; gap: 6px; padding: 9px 10px; border-right: 0; border-bottom: 1px solid #26354a; }
+  .manual-guide-toc > strong { display: none; }
+  .manual-guide-toc button { min-width: max-content; padding: 7px 9px; }
+  .manual-guide-content { padding: 15px 16px 26px; }
+  .manual-guide-section { padding-bottom: 18px; margin-bottom: 10px; }
+  .manual-guide-section h3 { font-size: 0.94rem; }
+  .manual-guide-section > p,.manual-guide-section ul { font-size: 0.8rem; }
+}
+
+/* Keep the Windows practice work area aligned with the assembly page: steps on
+   the left and the simulator filling the remaining workspace. */
+.windows-page {
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  background: #ffffff;
+}
+.windows-sim-layout {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  margin: 0;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 0;
+  align-items: stretch;
+}
+.windows-step-panel {
+  width: auto;
+  height: 100%;
+  max-height: none;
+  min-height: 0;
+  border-right: 1px solid #dce2ea;
+}
+.windows-simulator.manual-simulator {
+  min-width: 0;
+  min-height: 0;
+  height: calc(100% - 16px);
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.windows-simulator .manual-sim-screen {
+  flex: 1;
+  min-height: 0;
+}
+.windows-install-step-list {
+  max-height: clamp(260px, 45vh, 380px);
+}
+.panel-left:not(.windows-step-panel) > .step-list {
+  flex: 1 0 auto;
+  min-height: clamp(280px, 42vh, 380px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.panel-left:not(.windows-step-panel) > .step-list li {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .windows-sim-layout { grid-template-columns: 230px minmax(0, 1fr); }
+  .windows-step-panel { height: 100%; max-height: none; }
+}
+@media (max-width: 700px) {
+  .windows-page { overflow: auto; }
+  .windows-sim-layout { display: flex; flex-direction: column; align-items: stretch; }
+  .windows-step-panel {
+    order: 0;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    border-right: 0;
+    border-bottom: 1px solid #dce2ea;
+  }
+  .windows-install-step-list { max-height: clamp(220px, 42vh, 320px); }
+  .windows-simulator.manual-simulator {
+    order: 1;
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 560px;
+  }
+}
+
+

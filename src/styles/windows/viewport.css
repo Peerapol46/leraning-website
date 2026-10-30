@@ -1,0 +1,20 @@
+/* Keep the original installer layout, but make its full height reachable. */
+@supports (height: 100dvh) {
+  .app { height: 100dvh; }
+}
+
+.windows-practice-shell { min-height: 0; min-width: 0; }
+.windows-practice-shell .windows-simulator.manual-simulator {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.windows-practice-shell .windows-simulator .manual-sim-screen {
+  flex-shrink: 0;
+  min-height: 620px;
+}
+.windows-practice-shell .manual-desktop-action { flex-shrink: 0; }
+
+@media (max-width: 700px) {
+  .windows-practice-shell .windows-page { overflow-y: auto; }
+}

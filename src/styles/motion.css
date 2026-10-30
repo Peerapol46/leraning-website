@@ -1,0 +1,47 @@
+/* Interface effects stay outside the native Windows simulation screens. */
+.home-page, .learning-page { scroll-behavior: smooth; scroll-padding-top: 24px; }
+.scroll-reveal-ready, .computer-features > button.scroll-reveal-ready {
+  transition: opacity 550ms ease, translate 550ms cubic-bezier(.2,.7,.2,1),
+    transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background-color 200ms ease;
+}
+.scroll-reveal-pending { opacity: 0; translate: 0 20px; }
+.tutor-course-art { overflow: hidden; }
+.tutor-course-photo { transition: transform 350ms ease; }
+.tutor-course-action > span, .computer-hero-actions .learning-btn > span,
+.feature-arrow { transition: transform 200ms ease; }
+.learning-btn, .btn, .btn-mode, .site-nav-link, .site-nav-toggle,
+.computer-features > button {
+  transition: background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+.hero-course-link {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+  padding: 5px 0; color: #244d7d; font-size: .88rem;
+  text-decoration-line: underline; text-underline-offset: 5px;
+}
+.tutor-course:focus-visible, .computer-features > button:focus-visible {
+  box-shadow: 0 8px 24px rgba(23,47,80,.1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .tutor-course:hover { transform: translateY(-5px); border-color: #a6bedb; box-shadow: 0 12px 28px rgba(23,47,80,.1); }
+  .tutor-course:hover .tutor-course-photo { transform: scale(1.035); }
+  .tutor-course:hover .tutor-course-action > span { transform: translate(2px,-2px); }
+  .computer-features > button:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(23,47,80,.08); }
+  .computer-features > button:hover .feature-arrow,
+  .computer-hero-actions .learning-btn:hover > span { transform: translateX(3px); }
+  .learning-btn:not(:disabled):hover, .btn:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(23,47,80,.12); }
+  .hero-course-link:hover { color: #1558c0; }
+}
+.learning-btn:not(:disabled):active, .tutor-course:active,
+.computer-features > button:active, .site-nav-toggle:active { transform: scale(.985); }
+@media (prefers-reduced-motion: reduce) {
+  .home-page, .learning-page { scroll-behavior: auto; }
+  .scroll-reveal-ready { transition: none; }
+  .scroll-reveal-pending { opacity: 1; translate: none; }
+  .tutor-course:hover, .tutor-course:active, .tutor-course:hover .tutor-course-photo,
+  .learning-btn:not(:disabled):hover, .learning-btn:not(:disabled):active,
+  .btn:not(:disabled):hover, .computer-features > button:hover,
+  .computer-features > button:active, .site-nav-toggle:active,
+  .tutor-course:hover .tutor-course-action > span,
+  .computer-features > button:hover .feature-arrow,
+  .computer-hero-actions .learning-btn:hover > span { transform: none; }
+}

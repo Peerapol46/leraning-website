@@ -1,0 +1,141 @@
+/* ─── Mobile Layout ─── */
+@media (max-width: 900px) {
+  .topnav {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+  .topnav > div:first-child { width: 100%; }
+  .topnav h1 { font-size: 0.95rem; }
+  .topnav-stats {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .site-nav { padding: 0 12px; }
+  .home-page { padding: 0 20px; }
+  .windows-sim-layout { grid-template-columns: 1fr; }
+  .windows-step-panel { height: auto; max-height: 340px; min-height: 0; overflow-y: auto; }
+  .course-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .home-hero { min-height: 260px; }
+  .learning-page { padding: 24px 16px 32px; }
+
+  .main-row {
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+  .workspace {
+    order: 0;
+    flex: 0 0 auto;
+    width: 100%;
+    height: min(50svh, 460px);
+    min-height: 300px;
+  }
+  .panel {
+    order: 1;
+    width: 100%;
+    flex: 0 0 auto;
+    overflow: visible;
+    padding: 14px 16px;
+  }
+  .panel-left {
+    border-right: 0;
+    border-bottom: 1px solid #dce2ea;
+  }
+  .panel-right {
+    order: 2;
+    border-left: 0;
+  }
+  .windows-step-panel { order: 0; overflow-y: auto; }
+  .canvas-wrap canvas { touch-action: none; }
+}
+
+@media (max-width: 560px) {
+  .topnav { padding: 9px 12px; }
+  .topnav h1 { font-size: 0.9rem; }
+  .topnav .sub { font-size: 0.8rem; }
+  .topnav-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px 6px;
+  }
+  .topnav-stats .stat { min-width: 0; }
+  .topnav-stats > .btn { width: 100%; min-height: 40px; }
+  .topnav-stats > .btn:nth-of-type(1) { grid-column: span 1; }
+  .topnav-stats > .btn:nth-of-type(2) { grid-column: span 2; }
+  .site-nav { min-height: 48px; gap: 2px; }
+  .site-nav-link { padding: 8px 9px; font-size: 0.8rem; }
+  .home-page { padding: 0 14px; }
+  .home-hero { grid-template-columns: 1fr; gap: 0; padding-top: 26px; }
+  .home-hero-art { height: 160px; }
+  .hero-device { width: 135px; height: 105px; border-radius: 20px; font-size: 4.2rem; }
+  .home-courses { margin-top: 18px; }
+  .course-grid { gap: 9px; }
+  .course-art { height: 90px; }
+  .course-illustration { font-size: 2.8rem; }
+  .course-content { padding: 11px; }
+  .course-content p { min-height: 68px; font-size: 0.8rem; }
+  .home-footer { flex-direction: column; }
+  .windows-layout { grid-template-columns: 1fr; }
+  .windows-simulator { min-height: 0; }
+  .sim-step { gap: 6px; min-height: 38px; padding: 5px; font-size: .66rem; }
+  .sim-screen { min-height: 390px; padding: 24px 16px 10px; }
+  .desktop-screen { padding: 0; }
+  .sim-table-head,.sim-disk-row { grid-template-columns: 1.2fr .55fr .42fr; gap: 4px; padding: 8px 5px; font-size: .6rem; }
+  .windows-steps { display: grid; grid-template-columns: 1fr 1fr; }
+  .windows-step { gap: 8px; padding: 9px; }
+  .windows-step strong { font-size: 0.8rem; }
+  .windows-step-icon { width: 28px; height: 28px; }
+  .step-chevron { display: none; }
+  .quiz-footer { align-items: flex-start; flex-direction: column; }
+  .quiz-footer .learning-btn { width: 100%; }
+  .quiz-topic-grid { grid-template-columns: 1fr; }
+  .quiz-topic-card { min-height: 120px; }
+  .registration-fields { grid-template-columns: 1fr; }
+  .registration-field-wide { grid-column: auto; }
+  .registration-footer { align-items: stretch; flex-direction: column; }
+  .registration-footer .learning-btn { width: 100%; }
+  .sheet-notice { right: 12px; bottom: 12px; }
+  .quiz-result-actions { width: 100%; flex-direction: column; }
+  .quiz-result-actions .learning-btn { width: 100%; }
+  .windows-controls .learning-btn { padding: 9px 11px; font-size: 0.8rem; }
+
+  .workspace {
+    height: 44svh;
+    min-height: 260px;
+    max-height: 380px;
+    padding: 6px;
+  }
+  .canvas-wrap { border-radius: 8px; }
+  .panel { padding: 14px 12px; }
+  .btn, .btn-mode, .comp-btn { min-height: 40px; }
+  .modal-card {
+    width: calc(100vw - 24px);
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+    padding: 20px 16px;
+  }
+  .modal-actions { flex-direction: column; }
+}
+
+@media (max-width: 900px) and (max-height: 560px) {
+  .workspace {
+    height: 58svh;
+    min-height: 220px;
+  }
+}
+
+/* ─── Animations ─── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test src/app/hooks/usePageNavigation.test.js src/features/windows/data/editions.test.js src/services/googleSheets.test.js google-apps-script/Code.test.js src/features/windows/data/workflows.test.js src/features/quiz/data/questions.test.js src/features/assembly/models/officePcModel.test.js"
   },
   "dependencies": {
     "@react-three/drei": "^9.117.3",

@@ -1,0 +1,18 @@
+/* Global cascade order: base, shared UI, practice screens, theme, home. */
+@import './base.css';
+@import './interface.css';
+@import './assembly.css';
+@import './responsive.css';
+@import './windows/simulator.css';
+@import './windows/setup.css';
+@import './windows/oobe.css';
+@import './windows/guide.css';
+@import './theme.css';
+@import '../features/home/styles/learning-home.css';
+@import '../features/home/styles/computer-home.css';
+@import './navigation.css';
+@import './motion.css';
+@import './windows/editions.css';
+@import './footer.css';
+@import './windows/viewport.css';
+@import './windows/install-progress.css';

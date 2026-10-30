@@ -1,0 +1,101 @@
+/* Classic Windows Setup installation status. */
+:is(.manual-stage-13, .manual-stage-14) .manual-setup-shell {
+  width: min(620px, calc(100% - 24px));
+  height: 420px;
+  min-height: 420px;
+  border: 1px solid #8d9aaa;
+  border-radius: 2px;
+  box-shadow: 0 5px 20px #0003;
+}
+:is(.manual-stage-13, .manual-stage-14) .setup-window-title {
+  height: 30px;
+  flex-basis: 30px;
+  background: #e8e8e8;
+  color: #222;
+  font-size: 12px;
+}
+:is(.manual-stage-13, .manual-stage-14) .setup-window-controls i:last-child {
+  width: 30px;
+  height: 20px;
+  background: #c75050;
+  border: 0;
+  border-radius: 0;
+  font-size: 14px;
+}
+:is(.manual-stage-13, .manual-stage-14) .manual-setup-content {
+  padding: 26px 34px;
+}
+:is(.manual-stage-13, .manual-stage-14) .manual-installing h2 {
+  margin: 0 0 20px;
+  color: #0067b8;
+  font-size: 20px;
+  font-weight: 400;
+}
+:is(.manual-stage-13, .manual-stage-14) .manual-install-notice {
+  margin: 0 0 26px;
+  color: #333;
+  font: 12px/1.5 'Segoe UI', Arial, sans-serif;
+}
+:is(.manual-stage-13, .manual-stage-14) .manual-install-status-label {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: #222;
+}
+:is(.manual-stage-13, .manual-stage-14) .manual-installing ul {
+  gap: 7px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+:is(.manual-stage-13, .manual-stage-14) .manual-installing li {
+  min-height: 22px;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 4px;
+  color: #777;
+}
+:is(.manual-stage-13, .manual-stage-14) .manual-install-check svg {
+  width: 19px;
+  height: 19px;
+  display: block;
+  fill: none;
+  stroke: #369c32;
+  stroke-width: 3;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+:is(.manual-stage-13, .manual-stage-14, .manual-stage-15) .setup-statusbar::before {
+  width: 171px;
+}
+:is(.manual-stage-13, .manual-stage-14, .manual-stage-15) .setup-statusbar {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  left: 0;
+  right: 0;
+}
+:is(.manual-stage-13, .manual-stage-14, .manual-stage-15) .setup-status-progress {
+  width: auto;
+  max-width: none;
+  right: 0;
+}
+:is(.manual-stage-13, .manual-stage-14, .manual-stage-15) .setup-status-progress > span {
+  min-width: 0;
+  max-width: none;
+  box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  transition: width .08s linear;
+}
+.install-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  :is(.manual-stage-13, .manual-stage-14) .manual-setup-content { padding: 22px 18px; }
+  :is(.manual-stage-13, .manual-stage-14) .manual-installing ul { font-size: 12px; }
+  :is(.manual-stage-13, .manual-stage-14, .manual-stage-15) .setup-statusbar::before { width: 151px; }
+}

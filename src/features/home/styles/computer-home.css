@@ -1,0 +1,60 @@
+.tutor-home { --accent: #1558c0; --ink: #172f50; --muted: #4c6078; padding-top: 0; background: #fff; }
+.site-brand { color: #183151; font-size: 1rem; }
+.site-brand-mark { border-color: #2467c8; color: #2467c8; }
+.site-nav { min-height: 76px; border-bottom: 1px solid #e3eaf2; }
+.site-nav-link.active { color: #144da1; background: #edf4ff; }
+.computer-hero { position: relative; max-width: 1280px; margin-inline: auto; display: grid; grid-template-columns: 1.02fr 1fr; align-items: center; gap: 12px; min-height: 525px; padding: 56px 0 48px; isolation: isolate; }
+.computer-hero::before { content: ''; position: absolute; z-index: -1; inset: 0 calc(-1 * clamp(20px,6vw,100px)); background: linear-gradient(110deg,#f5f9ff,#f0f6ff 60%,#e9f3ff); border-bottom: 1px solid #e6eef7; }
+.computer-subject { display: flex; align-items: center; gap: 9px; margin-bottom: 20px; color: #31587f; font-size: .88rem; font-weight: 600; }
+.computer-subject > span { color: #1c62be; font-size: 1.3rem; }
+.computer-hero h1 { color: #183454; font-size: clamp(2rem,3.3vw,3.3rem); font-weight: 750; line-height: 1.5; letter-spacing: -.025em; margin-bottom: 22px; }
+.computer-hero h1 > span { color: #1558c0; }
+.computer-hero-description { color: #4c6078; font-size: 1.02rem; line-height: 1.95; }
+.computer-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.computer-hero-actions .learning-btn { display: flex; align-items: center; gap: 16px; min-height: 48px; padding: 11px 19px; border-radius: 6px; background: #1558c0; color: #fff; font-size: .9rem; }
+.computer-hero-actions .learning-btn:hover { background: #104999; }
+.computer-hero-actions .learning-btn.secondary { background: #fff; color: #244d7d; border: 1px solid #b4c6de; }
+.computer-hero-actions .learning-btn.secondary:hover { background: #e9f2ff; }
+.computer-hero-note { color: #586e87; font-size: .82rem; margin-top: 20px; }
+.computer-hero-image { min-width: 0; }
+.computer-hero-image svg { display: block; width: 100%; height: auto; }
+.computer-hero-image.has-banner svg { display: none; }
+.computer-home-banner { display: block; width: 100%; height: auto; border-radius: 8px; }
+.computer-home-banner[hidden] { display: none; }
+.computer-hero-with-banner { min-height: clamp(520px,44vw,680px); grid-template-columns: 1fr; }
+.computer-hero-with-banner::before { background: #f0f7ff; }
+.computer-hero-with-banner .computer-hero-copy { position: relative; z-index: 1; width: 47%; padding-block: 18px; }
+.computer-hero-with-banner h1 { font-size: clamp(1.9rem,3vw,3rem); }
+.computer-hero-photo { position: absolute; z-index: -1; inset: 0 calc(-1 * clamp(20px,6vw,100px)); overflow: hidden; }
+.computer-hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.computer-hero-with-banner .computer-hero-description { font-size: .96rem; }
+@media (max-width:1100px) and (min-width:761px) {
+  .computer-hero-with-banner .computer-hero-copy { width: 52%; }
+  .computer-hero-with-banner .computer-hero-copy::before { content: ''; position: absolute; inset: -12px -18px; z-index: -1; background: rgba(247,251,255,.92); border-radius: 8px; }
+  .computer-hero-with-banner .desktop-break { display: none; }
+}
+@media (max-width:760px) {
+  .computer-hero.computer-hero-with-banner { min-height: 0; padding-bottom: 0; }
+  .computer-hero-with-banner .computer-hero-copy { width: 100%; padding-block: 0; }
+  .computer-hero-photo { position: relative; z-index: 0; inset: auto; margin: 26px calc(-1 * clamp(20px,6vw,100px)) 0; }
+  .computer-hero-photo img { height: auto; object-fit: contain; }
+}
+.computer-features { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; max-width: 1180px; margin: 30px auto 0; }
+.computer-features > button { display: flex; align-items: center; gap: 15px; padding: 22px 20px; background: #fff; border: 1px solid #dce5ef; border-radius: 8px; text-align: left; color: #203b5c; transition: background .15s,border-color .15s; }
+.computer-features > button:hover { background: #f6f9ff; border-color: #a6bedb; }
+.computer-feature-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; color: #2363b7; background: #eef4fd; font-size: 1.5rem; flex-shrink: 0; }
+.computer-features strong,.computer-features small { display: block; }
+.computer-features strong { font-size: .95rem; font-weight: 650; line-height: 1.6; }
+.computer-features small { font-size: .82rem; color: #52667f; margin-top: 5px; line-height: 1.7; }
+.windows-feature-icon { grid-template-columns: repeat(2,10px); grid-template-rows: repeat(2,10px); gap: 3px; align-content: center; justify-content: center; }
+.windows-feature-icon i { width: 10px; height: 10px; background: #2363b7; }
+.feature-arrow { margin-left: auto; color: #436b9d; }
+.tutor-courses { padding-top: 46px; }
+.tutor-course-action { color: #1558c0; }
+.learning-btn,.btn-primary,.btn-mode.active-learn,.btn-mode.active-prac { background: #1558c0; }
+.learning-btn:hover:not(:disabled),.btn-primary:hover { background: #104999; }
+.learning-btn.secondary { background: #fff; color: #344256; }
+.learning-btn.completed-btn { background: #08754e; }
+@media (max-width:1100px) { .computer-hero { min-height: 465px; gap: 0; } .computer-features { gap: 12px; } .computer-features > button { padding: 18px 14px; gap: 10px; } .computer-features strong { font-size: .88rem; } .feature-arrow { display: none; } }
+@media (max-width:760px) { .computer-hero { grid-template-columns: 1fr; padding-block: 34px 22px; } .computer-hero h1 { font-size: clamp(2rem,6.7vw,2.8rem); } .computer-hero-description { font-size: .95rem; } .computer-hero-image { max-width: 520px; width: 100%; margin: 10px auto 0; } .computer-features { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; } .computer-features > button { padding: 16px 18px; } .feature-arrow { display: block; } .tutor-courses { padding-top: 32px; } }
+@media (max-width:480px) { .computer-hero-actions { flex-direction: column; align-items: stretch; } .computer-hero-actions .learning-btn { justify-content: space-between; } .computer-subject { font-size: .8rem; gap: 6px; } .computer-hero h1 { font-size: clamp(1.6rem,6.5vw,2rem); } .computer-hero-description { font-size: .9rem; } }

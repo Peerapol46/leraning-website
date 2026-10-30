@@ -51,30 +51,52 @@ npm run build
 
 ```text
 src/
-├── App.jsx
-├── main.jsx
-├── index.css
-├── components/
-│   ├── ErrorBoundary.jsx
-│   ├── Scene.jsx
-│   ├── ComputerCase.jsx
-│   ├── Part.jsx
-│   ├── InstallationZone.jsx
-│   ├── AssemblyPanel.jsx
-│   ├── ComponentPanel.jsx
-│   ├── TopNav.jsx
-│   └── LearningPages.jsx
-├── data/
-│   ├── parts.js
-│   ├── installationZones.js
-│   └── assemblySteps.js
-├── hooks/
-│   └── useAssemblyStore.js
-└── services/
-    └── googleSheets.js
+  main.jsx
+  app/
+    App.jsx
+    navigation.js
+    hooks/
+      usePageNavigation.js
+      usePageNavigation.test.js
+  assets/images/
+    home-banner.png
+    computer.png
+    windows.png
+  components/
+    common/ErrorBoundary.jsx
+    layout/TopNav.jsx
+  features/
+    home/
+      pages/HomePage.jsx
+      components/
+      data/courses.js
+      styles/
+    assembly/
+      pages/AssemblyPage.jsx
+      components/
+      scene/
+      models/
+      hooks/useAssemblyStore.js
+      data/
+    windows/
+      pages/WindowsPractice.jsx
+      data/
+      utils/formatters.js
+    quiz/
+      pages/QuizPage.jsx
+      data/questions.js
+  services/googleSheets.js
+  styles/
+    index.css
+    base.css
+    interface.css
+    assembly.css
+    responsive.css
+    theme.css
+    windows/
 
-google-apps-script/
-└── Code.gs
+public/                    # Static 3D models and public assets
+google-apps-script/Code.gs  # Google Sheets integration
 ```
 
 ## วิธีใช้
@@ -83,3 +105,20 @@ google-apps-script/
 2. หากทำแบบทดสอบ ให้กรอกชื่อ เลขที่ และเลือกห้อง
 3. เลือกหัวข้อประกอบคอมพิวเตอร์หรือติดตั้ง Windows แล้วตอบคำถาม 10 ข้อ
 4. ตรวจคะแนน และตรวจผลที่บันทึกไว้ในชีต Google Sheets ที่ตรงกับแบบทดสอบ
+
+
+## Code organization
+
+- `app/`: application shell, shared route IDs, and browser history.
+- `components/`: shared navigation and error handling.
+- `features/home/`: homepage, hero, course cards, and homepage styles.
+- `features/assembly/`: assembly page, panels, 3D scene, models, state, and hardware data.
+- `features/windows/`: installer simulation, guide/step data, and formatting helpers.
+- `features/quiz/`: quiz screen and question banks.
+- `services/`: Google Sheets requests.
+- `assets/images/`: images imported into the production bundle.
+- `styles/index.css`: the stylesheet entry point; import order preserves the existing cascade.
+
+Edit course titles in `features/home/data/courses.js`, questions in `features/quiz/data/questions.js`, and Windows guide content in `features/windows/data/guide.js` (all paths under `src/`).
+
+Run `npm test` for navigation tests, `npm run build` for a production build, and `npm run dev` for local development.

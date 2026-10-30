@@ -1,0 +1,161 @@
+/* Windows 10 OOBE organization connection choice shown before computer naming. */
+.manual-stage-18.windows-simulator { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: #0065a6; }
+.manual-stage-18 .manual-sim-screen { width: 100%; height: 618px; min-height: 618px; display: block; padding: 0; background: #0065a6; }
+.manual-connect-screen { position: relative; width: 100%; min-height: 618px; padding: 108px 7% 80px; color: #f4f8fb; background: #0065a6; font-family: 'Segoe UI',Arial,sans-serif; }
+.manual-connect-screen h2 { margin: 0 0 22px; color: #edf6fc; font: 300 29px/1.25 'Segoe UI Light','Segoe UI',Arial,sans-serif; }
+.manual-connect-intro { margin: 0; color: #e2eff7; font: 13px/1.4 'Segoe UI',Arial,sans-serif; }
+.manual-connect-options { width: min(318px,100%); display: grid; margin: 25px 0 25px; }
+.manual-connect-options button { min-height: 35px; display: flex; align-items: center; gap: 9px; padding: 2px 9px; color: #f5f9fc; background: transparent; border: 0; border-radius: 0; font: 13px 'Segoe UI',Arial,sans-serif; text-align: left; }
+.manual-connect-options button:hover,.manual-connect-options button.selected { background: #087acb; }
+.manual-connect-options button:disabled,.manual-connect-options button:disabled:hover { opacity: 1; cursor: default; background: transparent; }
+.manual-connect-options button:focus-visible { outline: 1px solid #d9f0ff; outline-offset: -1px; }
+.manual-connect-options svg { width: 28px; height: 28px; flex: 0 0 28px; fill: none; stroke: #f4f8fb; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.manual-connect-description { max-width: 530px; margin: 0; color: #e1eef6; font: 13px/1.35 'Segoe UI',Arial,sans-serif; }
+.manual-connect-warning { width: min(530px,100%); margin: 12px 0 0; padding: 8px 10px; color: #fff1c2; background: #f4f6f9; border-left: 3px solid #ffd15a; font: 12px/1.4 'Segoe UI',Arial,sans-serif; }
+.manual-connect-privacy { position: absolute; left: 7%; bottom: 97px; margin: 0; color: #b6d4e5; font: 11px 'Segoe UI',Arial,sans-serif; }
+.manual-connect-privacy-icon { position: absolute; left: 7%; bottom: 43px; width: 28px; height: 28px; fill: none; stroke: #d8edf7; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.manual-connect-continue { position: absolute; right: 3%; bottom: 51px; width: 100px; min-height: 28px; padding: 4px 12px; color: #eff8fd; background: #087acb; border: 1px solid #1685d3; border-radius: 0; font: 12px 'Segoe UI',Arial,sans-serif; }
+.manual-connect-continue:hover,.manual-connect-continue:focus-visible { background: #1486d6; outline: 1px solid #d7efff; outline-offset: 1px; }
+@media (max-width: 700px) {
+  .manual-stage-18 .manual-sim-screen,.manual-connect-screen { height: 618px; min-height: 618px; }
+  .manual-connect-screen { padding: 82px 7% 80px; }
+  .manual-connect-screen h2 { margin-bottom: 20px; font-size: 25px; }
+  .manual-connect-intro,.manual-connect-description { font-size: 12px; }
+  .manual-connect-privacy { bottom: 97px; }
+  .manual-connect-privacy-icon { bottom: 43px; }
+}
+
+/* First Windows boot after the restart prompt. */
+.manual-stage-16.windows-simulator { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: #000; }
+.manual-stage-16 .manual-sim-screen { width: 100%; height: 618px; min-height: 618px; padding: 0; background: #000; }
+.manual-windows-start-screen { position: relative; width: 100%; min-height: 618px; overflow: hidden; color: #f4f4f4; background: #000; font-family: 'Segoe UI',Arial,sans-serif; }
+.manual-windows-start-logo { position: absolute; top: 32%; left: 50%; width: 70px; height: 94px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 3px; transform: translateX(-50%) perspective(110px) rotateY(-10deg) skewY(-4deg); }
+.manual-windows-start-logo i { display: block; background: #00bdf2; }
+.manual-windows-start-loading { position: absolute; top: 79%; left: 50%; display: grid; justify-items: center; gap: 12px; transform: translateX(-50%); white-space: nowrap; }
+.manual-windows-start-spinner { position: relative; width: 24px; height: 24px; display: block; animation: manual-dotted-spin .9s steps(8,end) infinite; }
+.manual-windows-start-spinner i { position: absolute; width: 3px; height: 3px; display: block; border-radius: 50%; background: #f4f4f4; }
+.manual-windows-start-spinner i:nth-child(1) { top: 1px; left: 10px; opacity: 1; }
+.manual-windows-start-spinner i:nth-child(2) { top: 4px; left: 17px; opacity: .84; }
+.manual-windows-start-spinner i:nth-child(3) { top: 10px; left: 20px; opacity: .7; }
+.manual-windows-start-spinner i:nth-child(4) { top: 17px; left: 17px; opacity: .56; }
+.manual-windows-start-spinner i:nth-child(5) { top: 20px; left: 10px; opacity: .43; }
+.manual-windows-start-spinner i:nth-child(6) { top: 17px; left: 3px; opacity: .3; }
+.manual-windows-start-spinner i:nth-child(7) { top: 10px; left: 0; opacity: .22; }
+.manual-windows-start-spinner i:nth-child(8) { top: 4px; left: 3px; opacity: .14; }
+.manual-windows-start-loading p { margin: 0; color: #f2f2f2; font: 300 20px/1.35 'Segoe UI Light','Segoe UI',Arial,sans-serif; }
+@keyframes manual-dotted-spin { to { transform: rotate(360deg); } }
+@media (max-width: 700px) {
+  .manual-stage-16 .manual-sim-screen,.manual-windows-start-screen { height: 618px; min-height: 618px; }
+}
+
+/* Windows 10 OOBE local account creation page. */
+.manual-stage-19.windows-simulator { min-height: 618px; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: #0065a6; }
+.manual-stage-19 .manual-sim-screen { width: 100%; height: 618px; min-height: 618px; display: block; padding: 0; background: #0065a6; }
+.manual-account-setup { position: relative; box-sizing: border-box; width: 100%; height: 618px; min-height: 618px; overflow: hidden; padding: 110px 6.25% 76px; color: #e4f1f8; background: #0065a6; font-family: 'Segoe UI',Arial,sans-serif; }
+.manual-account-setup h2 { margin: 0 0 20px; color: #e8f3f9; font: 300 29px/1.25 'Segoe UI Light','Segoe UI',Arial,sans-serif; }
+.manual-account-intro { max-width: 560px; margin: 0 0 23px; color: #e2eff7; font: 13px/1.35 'Segoe UI',Arial,sans-serif; }
+.manual-account-label { display: block; margin: 0 0 9px; color: #edf6fb; font: 600 13px/1.3 'Segoe UI',Arial,sans-serif; }
+.manual-account-name-field { width: min(245px,100%); height: 26px; display: flex; margin-bottom: 15px; background: #fff; border: 1px solid #a7bdcb; }
+.manual-account-name-field input { width: 100%; min-width: 0; padding: 3px 8px; color: #333; background: #fff; border: 0; outline: 0; font: 12px 'Segoe UI',Arial,sans-serif; }
+.manual-account-name-field:focus-within { outline: 1px solid #e9f6fd; outline-offset: 1px; }
+.manual-account-name-field button { width: 23px; flex: 0 0 23px; padding: 0; color: #87939a; background: #fff; border: 0; border-radius: 0; font: 20px/1 'Segoe UI',Arial,sans-serif; }
+.manual-account-setup h3 { margin: 0 0 9px; color: #edf6fb; font: 600 13px/1.3 'Segoe UI',Arial,sans-serif; }
+.manual-account-password-fields { width: min(245px,100%); display: grid; gap: 10px; }
+.manual-account-password-fields input { box-sizing: border-box; width: 100%; height: 27px; padding: 4px 8px; color: #eef5f8; background: #00385f; border: 1px solid #668aa2; border-radius: 0; box-shadow: 0 3px 12px rgba(24,39,60,.05); font: 12px 'Segoe UI',Arial,sans-serif; }
+.manual-account-password-fields input::placeholder { color: #a9bdcc; opacity: 1; }
+.manual-account-password-fields input:focus { border-color: #d8effb; outline: 1px solid #d8effb; outline-offset: 0; }
+.manual-account-warning { width: min(530px,80%); margin: 10px 0 0; color: #fff4d2; font: 12px/1.4 'Segoe UI',Arial,sans-serif; }
+.manual-account-privacy-icon { position: absolute; left: 6.25%; bottom: 58px; width: 29px; height: 29px; fill: none; stroke: #e3f3fb; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.manual-account-next { position: absolute; right: 6.25%; bottom: 61px; width: 100px; min-height: 28px; padding: 4px 12px; color: #eff8fd; background: #087acb; border: 1px solid #1685d3; border-radius: 0; font: 12px 'Segoe UI',Arial,sans-serif; }
+.manual-account-next:hover,.manual-account-next:focus-visible { background: #1486d6; outline: 1px solid #d7efff; outline-offset: 1px; }
+@media (max-width: 700px) {
+  .manual-stage-19 .manual-sim-screen,.manual-account-setup { height: 618px; min-height: 618px; }
+  .manual-account-setup { padding: 82px 6% 76px; }
+  .manual-account-setup h2 { margin-bottom: 18px; font-size: 25px; }
+  .manual-account-intro { max-width: 100%; font-size: 12px; }
+  .manual-account-label,.manual-account-setup h3 { font-size: 12px; }
+  .manual-account-privacy-icon { left: 6%; bottom: 43px; }
+  .manual-account-next { right: 6%; bottom: 46px; }
+}
+
+/* Windows Setup product key page shown after Install now. */
+.manual-activation-page.windows-simulator { min-height: 618px; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: #190653; }
+.manual-activation-page .manual-sim-screen { position: relative; width: 100%; height: 618px; min-height: 618px; justify-content: center; padding: 0 0 90px; background: #190653; }
+.manual-activation-page .manual-setup-shell { width: min(486px,calc(100% - 32px)); height: 365px; min-height: 365px; flex: 0 0 auto; border: 1px solid #bdbdbd; border-radius: 5px; background: #fff; box-shadow: 0 3px 12px rgba(24,39,60,.05); }
+.manual-activation-page .setup-window-title { height: 32px; flex: 0 0 32px; gap: 6px; padding: 0 8px; color: #24415e; background: #dedee0; border-bottom: 1px solid #c6c6c8; font: 10px 'Segoe UI',Arial,sans-serif; }
+.manual-activation-page .setup-title-back { width: 22px; height: 22px; flex: 0 0 22px; display: grid; place-items: center; padding: 0 0 2px; color: #74808a; background: #f7f9fc; border: 1px solid #aeb5bc; border-radius: 50%; font: 20px/1 'Segoe UI',Arial,sans-serif; }
+.manual-activation-page .setup-title-back:hover { background: #fff; }
+.manual-activation-page .setup-title-icon { color: #16866d; }
+.manual-activation-page .setup-window-controls i { color: #4a5663; }
+.manual-activation-page .setup-window-controls i:last-child { color: #fff; }
+.manual-activation-page .manual-setup-content { min-height: 0; align-items: stretch; justify-content: flex-start; overflow: hidden; padding: 14px 38px 10px; color: #222; background: #fff; font-family: 'Segoe UI',Arial,sans-serif; }
+.manual-activation-page .setup-window-actions { display: none; }
+.manual-activation-content { position: relative; box-sizing: border-box; width: 100%; height: 100%; display: block; color: #222; font-family: 'Segoe UI',Arial,sans-serif; }
+.manual-activation-content h2 { margin: 0 0 17px; color: #285a8e; font: 13px/1.3 'Segoe UI',Arial,sans-serif; }
+.manual-activation-content p { margin: 0 0 11px; color: #222; font: 10px/1.35 'Segoe UI',Arial,sans-serif; }
+.manual-product-key-input { box-sizing: border-box; width: min(184px,100%); height: 19px; margin-top: 2px; padding: 1px 4px; color: #222; background: #fff; border: 0; border-bottom: 2px solid #5f9bd1; border-radius: 0; font: 11px 'Segoe UI',Arial,sans-serif; }
+.manual-product-key-input:focus { outline: none; border-bottom-color: #267cc5; }
+.manual-activation-warning { margin-top: 7px !important; color: #8d2620 !important; font-size: 9px !important; }
+.manual-activation-footer { position: absolute; right: -24px; bottom: 0; left: -14px; display: flex; align-items: center; gap: 0; }
+.manual-privacy-statement { padding: 0; color: #2872b1; background: transparent; border: 0; border-radius: 0; font: 10px 'Segoe UI',Arial,sans-serif; text-align: left; text-decoration: underline; cursor: pointer; }
+.manual-privacy-statement:hover,.manual-privacy-statement:focus-visible { color: #145e9c; outline: none; text-decoration: underline; }
+.manual-product-key-skip { margin-left: auto; padding: 3px 4px; color: #2872b1; background: transparent; border: 0; border-radius: 0; font: 10px 'Segoe UI',Arial,sans-serif; text-decoration: underline; white-space: nowrap; }
+.manual-product-key-skip:hover,.manual-product-key-skip:focus-visible { color: #145e9c; outline: none; text-decoration: underline; }
+.manual-activation-next { width: 56px; min-height: 19px; margin-left: 52px; padding: 2px 8px; color: #333; background: #f7f9fc; border: 1px solid #aaa; border-radius: 2px; font: 9px 'Segoe UI',Arial,sans-serif; }
+.manual-activation-next:disabled { color: #777; background: #f7f9fc; border-color: #c8c8c8; }
+.manual-activation-next:not(:disabled):hover,.manual-activation-next:not(:disabled):focus-visible { border-color: #3286c3; outline: 1px solid #3286c3; }
+.manual-activation-page .setup-statusbar { bottom: 42px; width: 100%; height: 42px; gap: 0; border-top: 6px solid #b4c4d8; background: #17064f; font: 10px 'Segoe UI',Arial,sans-serif; }
+.manual-activation-page .setup-statusbar::before { position: absolute; top: -6px; left: 0; width: 4.5%; height: 6px; background: #80cf38; content: ''; }
+.manual-activation-page .setup-statusbar span { gap: 5px; padding: 0 7px; }
+.manual-activation-page .setup-statusbar span:first-child { width: 150px; border-right: 1px solid #aaa; }
+.manual-activation-page .setup-statusbar b { font-size: 27px; font-weight: 400; }
+.manual-activation-page .setup-statusbar i { display: none; }
+@media (max-width: 700px) {
+  .manual-activation-page .manual-sim-screen { height: 618px; min-height: 618px; padding-bottom: 90px; }
+  .manual-activation-page .manual-setup-shell { width: min(486px,calc(100% - 16px)); height: 365px; min-height: 365px; }
+  .manual-activation-page .manual-setup-content { padding-right: 22px; padding-left: 22px; }
+  .manual-activation-footer { right: -9px; left: -9px; }
+  .manual-product-key-skip { font-size: 9px; }
+  .manual-activation-next { margin-left: 14px; }
+  .manual-activation-page .setup-statusbar span:first-child { width: 132px; }
+}
+
+/* Windows Setup edition selection page after skipping a product key. */
+.manual-edition-page.windows-simulator { min-height: 618px; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: #190653; }
+.manual-edition-page .manual-sim-screen { position: relative; width: 100%; height: 618px; min-height: 618px; justify-content: center; padding: 0 0 90px; background: #190653; }
+.manual-edition-page .manual-setup-shell { width: min(486px,calc(100% - 32px)); height: 365px; min-height: 365px; flex: 0 0 auto; border: 1px solid #bdbdbd; border-radius: 5px; background: #fff; box-shadow: 0 3px 12px rgba(24,39,60,.05); }
+.manual-edition-page .setup-window-title { height: 32px; flex: 0 0 32px; gap: 6px; padding: 0 8px; color: #24415e; background: #dedee0; border-bottom: 1px solid #c6c6c8; font: 10px 'Segoe UI',Arial,sans-serif; }
+.manual-edition-page .setup-title-back { width: 22px; height: 22px; flex: 0 0 22px; display: grid; place-items: center; padding: 0 0 2px; color: #36688f; background: #f7f9fc; border: 1px solid #aeb5bc; border-radius: 50%; font: 20px/1 'Segoe UI',Arial,sans-serif; }
+.manual-edition-page .setup-title-back:hover { background: #fff; }
+.manual-edition-page .setup-title-icon { color: #16866d; }
+.manual-edition-page .setup-window-controls i { color: #4a5663; }
+.manual-edition-page .setup-window-controls i:last-child { color: #fff; }
+.manual-edition-page .manual-setup-content { position: relative; min-height: 0; align-items: stretch; justify-content: flex-start; overflow: hidden; padding: 14px 38px 10px; color: #222; background: #fff; font-family: 'Segoe UI',Arial,sans-serif; }
+.manual-edition-page .setup-window-actions { display: none; }
+.manual-edition-content { position: relative; box-sizing: border-box; width: 100%; height: 100%; display: block; color: #222; font-family: 'Segoe UI',Arial,sans-serif; }
+.manual-edition-content h2 { margin: 0 0 15px; color: #285a8e; font: 13px/1.3 'Segoe UI',Arial,sans-serif; }
+.manual-edition-list { width: 100%; height: 130px; overflow: auto; border: 1px solid #9ea5ad; background: #fff; }
+.manual-edition-header,.manual-edition-row { box-sizing: border-box; width: 100%; min-height: 17px; display: grid; grid-template-columns: minmax(0,2fr) minmax(60px,.65fr) minmax(68px,.75fr); align-items: center; gap: 4px; padding: 1px 5px; color: #222; font: 9px/1.25 'Segoe UI',Arial,sans-serif; text-align: left; }
+.manual-edition-header { background: #f2f2f2; border-bottom: 1px solid #b8b8b8; }
+.manual-edition-row { min-height: 16px; border: 0; border-radius: 0; background: #fff; }
+.manual-edition-row:hover { background: #e8f1fa; }
+.manual-edition-row.selected,.manual-edition-row.selected:hover { color: #fff; background: #001e73; }
+.manual-edition-row:focus-visible { outline: 1px dotted #2872b1; outline-offset: -2px; }
+.manual-edition-description { display: grid; gap: 1px; margin-top: 6px; color: #333; font: 10px/1.25 'Segoe UI',Arial,sans-serif; }
+.manual-edition-warning { margin: 8px 0 0; color: #8d2620; font: 9px/1.35 'Segoe UI',Arial,sans-serif; }
+.manual-edition-next { position: absolute; right: -24px; bottom: 0; width: 56px; min-height: 19px; padding: 2px 8px; color: #333; background: #f7f9fc; border: 1px solid #aaa; border-radius: 2px; font: 9px 'Segoe UI',Arial,sans-serif; }
+.manual-edition-next:hover,.manual-edition-next:focus-visible { border-color: #3286c3; outline: 1px solid #3286c3; }
+.manual-edition-page .setup-statusbar { bottom: 42px; width: 100%; height: 42px; gap: 0; border-top: 6px solid #b4c4d8; background: #17064f; font: 10px 'Segoe UI',Arial,sans-serif; }
+.manual-edition-page .setup-statusbar::before { position: absolute; top: -6px; left: 0; width: 5.5%; height: 6px; background: #80cf38; content: ''; }
+.manual-edition-page .setup-statusbar span { gap: 5px; padding: 0 7px; }
+.manual-edition-page .setup-statusbar span:first-child { width: 150px; border-right: 1px solid #aaa; }
+.manual-edition-page .setup-statusbar b { font-size: 27px; font-weight: 400; }
+.manual-edition-page .setup-statusbar i { display: none; }
+@media (max-width: 700px) {
+  .manual-edition-page .manual-sim-screen { height: 618px; min-height: 618px; padding-bottom: 90px; }
+  .manual-edition-page .manual-setup-shell { width: min(486px,calc(100% - 16px)); height: 365px; min-height: 365px; }
+  .manual-edition-page .manual-setup-content { padding-right: 22px; padding-left: 22px; }
+  .manual-edition-page .setup-statusbar span:first-child { width: 132px; }
+  .manual-edition-next { right: -9px; }
+}
+
