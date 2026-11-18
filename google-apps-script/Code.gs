@@ -69,8 +69,10 @@ function getSheet_(name, selectedSpreadsheet) {
   const spreadsheet = selectedSpreadsheet || (spreadsheetId ? SpreadsheetApp.openById(spreadsheetId) : null)
   if (!spreadsheet) throw new Error('กรุณารัน setupSheets จาก Google Sheet ที่ต้องการใช้ก่อน')
   let sheet = spreadsheet.getSheetByName(name)
-  if (!sheet) sheet = spreadsheet.insertSheet(name)
-  sheet.getRange(1, 1, 1, SHEET_HEADERS[name].length).setValues([SHEET_HEADERS[name]])
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(name)
+    sheet.getRange(1, 1, 1, SHEET_HEADERS[name].length).setValues([SHEET_HEADERS[name]])
+  }
   return sheet
 }
 

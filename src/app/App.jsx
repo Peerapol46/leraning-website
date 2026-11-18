@@ -7,6 +7,7 @@ import HomePage from '../features/home/pages/HomePage'
 const QuizPage = lazy(() => import('../features/quiz/pages/QuizPage').then((module) => ({ default: module.QuizPage })))
 const WindowsPractice = lazy(() => import('../features/windows/pages/WindowsPractice'))
 import { saveQuizRecord } from '../services/googleSheets'
+import { clearSession } from '../hooks/useSessionState'
 import { usePageNavigation } from './hooks/usePageNavigation.js'
 
 export default function App() {
@@ -21,10 +22,17 @@ export default function App() {
     store.setTimerRunning(activePage === 'assembly' && !store.assemblyComplete && store.hasStarted)
   }, [activePage, store.assemblyComplete, store.hasStarted])
 
+  useEffect(() => {
+    if (activePage === 'pretest' || activePage === 'posttest') {
+      clearSession('quiz:v3:' + activePage + ':')
+    }
+  }, [activePage])
+
   const handleQuizComplete = ({ requestId, testType, score, maxScore, student }) =>
     saveQuizRecord({
       requestId,
       testType,
+      topic: 'assembly',
       score,
       maxScore,
       // Keep the old Apps Script deployment compatible while recording the room value.
