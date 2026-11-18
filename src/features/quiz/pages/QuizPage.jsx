@@ -4,7 +4,7 @@ import RecordStatus from '../../../components/common/RecordStatus'
 import { createRecordId } from '../../../services/googleSheets'
 import { useScrollReveal } from '../../../hooks/useScrollReveal'
 
-import { QUESTION_BANKS, QUIZ_TOPICS, CHOICE_LABELS } from '../data/questions'
+import { QUESTION_BANKS, CHOICE_LABELS } from '../data/questions'
 
 
 export function QuizPage({ type, onQuizComplete }) {
@@ -13,8 +13,7 @@ export function QuizPage({ type, onQuizComplete }) {
   const [identityForm, setIdentityForm] = useSessionState('quiz:v3:' + type + ':identityForm', { name: '', number: '', room: '' })
   const [quizStudent, setQuizStudent] = useSessionState('quiz:v3:' + type + ':quizStudent', null)
   const [identityError, setIdentityError] = useSessionState('quiz:v3:' + type + ':identityError', '')
-  const [topic, setTopic] = useSessionState('quiz:v3:' + type + ':topic', null)
-  const questions = topic ? QUESTION_BANKS[topic][type] : []
+  const questions = QUESTION_BANKS[type] || []
   const [index, setIndex] = useSessionState('quiz:v3:' + type + ':index', 0)
   const [selected, setSelected] = useSessionState('quiz:v3:' + type + ':selected', null)
   const [score, setScore] = useSessionState('quiz:v3:' + type + ':score', 0)
@@ -37,10 +36,8 @@ export function QuizPage({ type, onQuizComplete }) {
     setRecordState('idle')
     setRecordError('')
   }
-  const startTopic = (topicId) => { setTopic(topicId); resetQuiz() }
   const restart = () => resetQuiz()
-  const changeTopic = () => { setTopic(null); resetQuiz() }
-  const changeIdentity = () => { setQuizStudent(null); setTopic(null); resetQuiz() }
+  const changeIdentity = () => { setQuizStudent(null); resetQuiz() }
   const submitIdentity = (event) => {
     event.preventDefault()
     const student = {
@@ -66,7 +63,7 @@ export function QuizPage({ type, onQuizComplete }) {
     const generation = submission.current
     setRecordState('saving')
     try {
-      const response = await onQuizComplete({ requestId, testType: type, topic, score, maxScore: questions.length, student: quizStudent })
+      const response = await onQuizComplete({ requestId, testType: type, score, maxScore: questions.length, student: quizStudent })
       if (generation === submission.current) setRecordState(response.confirmed ? 'confirmed' : 'unconfirmed')
     } catch (error) {
       if (generation === submission.current) { setRecordState('error'); setRecordError(error.message) }
@@ -82,7 +79,7 @@ export function QuizPage({ type, onQuizComplete }) {
     <section className="learning-hero" data-reveal>
       <span className="eyebrow">{isPre ? 'เริ่มต้นการเรียนรู้' : 'ทบทวนสิ่งที่เรียนรู้'}</span>
       <h1>{isPre ? 'แบบทดสอบก่อนเรียน' : 'แบบทดสอบหลังเรียน'}</h1>
-      <p>{isPre ? 'เลือกบทเรียนเพื่อสำรวจความรู้พื้นฐาน ก่อนเริ่มบทนั้น' : 'เลือกบทเรียนเพื่อวัดความเข้าใจหลังเรียนจบ แต่ละบทมี 10 ข้อ'}</p>
+      <p>{isPre ? 'สำรวจความรู้พื้นฐานก่อนเริ่มเรียน' : 'วัดความเข้าใจหลังเรียนจบ'} · {questions.length} ข้อ</p>
     </section>
     <section className="quiz-card" data-reveal aria-live="polite">
       {!quizStudent ? <form className="quiz-identity-form" noValidate onSubmit={submitIdentity}>
@@ -114,21 +111,17 @@ export function QuizPage({ type, onQuizComplete }) {
         {identityError && <p className="registration-error" role="alert">{identityError}</p>}
         <div className="registration-footer">
           <p>ระบบบันทึกเฉพาะข้อมูลที่ใช้ระบุผู้ทำแบบทดสอบและคะแนน</p>
-          <button className="learning-btn" type="submit">ไปเลือกแบบทดสอบ</button>
+          <button className="learning-btn" type="submit">เริ่มทำแบบทดสอบ</button>
         </div>
-      </form> : !topic ? <div className="quiz-topic-screen">
-        <div className="quiz-topic-heading"><span className="eyebrow">เลือกบทเรียน</span><h2>ต้องการทดสอบเรื่องใด?</h2><p>แต่ละบทมี 10 ข้อ พร้อมคำอธิบายหลังเลือกคำตอบ</p></div>
-        <div className="quiz-student-summary"><span>{quizStudent.name} · เลขที่ {quizStudent.number} · {quizStudent.room}</span><button type="button" onClick={changeIdentity}>แก้ไขข้อมูล</button></div>
-        <div className="quiz-topic-grid">{QUIZ_TOPICS.map((item) => <button type="button" key={item.id} className={`quiz-topic-card ${item.theme}`} onClick={() => startTopic(item.id)}><span className="quiz-topic-icon" aria-hidden="true">{item.icon}</span><span className="quiz-topic-copy"><strong>{item.title}</strong><small>{item.description}</small></span><span className="quiz-topic-count">10 ข้อ <b>→</b></span></button>)}</div>
-      </div> : finished ? <div className="quiz-result">
+      </form> : finished ? <div className="quiz-result">
         <div className="result-icon">{score >= 8 ? '🏆' : '✨'}</div>
-        <span className="eyebrow">{QUIZ_TOPICS.find((item) => item.id === topic).title} · ทำแบบทดสอบเสร็จแล้ว</span>
+        <span className="eyebrow">ทำแบบทดสอบเสร็จแล้ว</span>
         <h2>คุณได้ {score} / {questions.length} คะแนน</h2>
-        <p>{score >= 8 ? 'ยอดเยี่ยม! คุณเข้าใจเนื้อหาบทนี้ได้ดีมาก' : 'ลองทบทวนบทนี้ แล้วกลับมาทำแบบทดสอบอีกครั้งได้เลย'}</p>
+        <p>{score >= 8 ? 'ยอดเยี่ยม! คุณเข้าใจเนื้อหาได้ดีมาก' : 'ลองทบทวนเนื้อหา แล้วกลับมาทำแบบทดสอบอีกครั้งได้เลย'}</p>
         <RecordStatus state={recordState === 'saving' && !sending.current ? 'unconfirmed' : recordState} error={recordError} />
-        <div className="quiz-result-actions"><button className="learning-btn" onClick={restart}>ทำบทนี้อีกครั้ง</button><button className="learning-btn secondary" onClick={changeTopic}>เลือกบทเรียนอื่น</button></div>
+        <div className="quiz-result-actions"><button className="learning-btn" onClick={restart}>ทำอีกครั้ง</button><button className="learning-btn secondary" onClick={changeIdentity}>เปลี่ยนข้อมูลผู้ทำ</button></div>
       </div> : <>
-        <div className="quiz-active-topic"><span>{QUIZ_TOPICS.find((item) => item.id === topic).icon} {QUIZ_TOPICS.find((item) => item.id === topic).title}</span><button type="button" onClick={changeTopic}>เปลี่ยนบทเรียน</button></div>
+        <div className="quiz-student-summary"><span>{quizStudent.name} · เลขที่ {quizStudent.number} · {quizStudent.room}</span><button type="button" onClick={changeIdentity}>แก้ไขข้อมูล</button></div>
         <div className="quiz-progress-row"><span>ข้อ {index + 1} จาก {questions.length}</span><span>คะแนน {score}</span></div>
         <div className="quiz-progress"><span style={{ width: `${((index + 1) / questions.length) * 100}%` }} /></div>
         <h2 className="question-title">{questions[index].q}</h2>
@@ -137,7 +130,6 @@ export function QuizPage({ type, onQuizComplete }) {
         <div className="quiz-footer"><span>เลือกคำตอบที่ถูกต้องเพื่อไปต่อ</span><button className="learning-btn" onClick={next} disabled={selected === null}>{index === questions.length - 1 ? 'ดูผลคะแนน' : 'ข้อต่อไป →'}</button></div>
       </>}
     </section>
-    <p className="learning-note">คะแนนจะถูกบันทึกในชีต “{isPre ? 'แบบทดสอบก่อนเรียน' : 'แบบทดสอบหลังเรียน'}” พร้อมชื่อ เลขที่ ห้อง บทเรียน และคะแนน</p>
+    <p className="learning-note">คะแนนจะถูกบันทึกในชีต "{isPre ? 'แบบทดสอบก่อนเรียน' : 'แบบทดสอบหลังเรียน'}" พร้อมชื่อ เลขที่ ห้อง และคะแนน</p>
   </main>
 }
-

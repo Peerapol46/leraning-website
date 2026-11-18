@@ -21,11 +21,10 @@ export default function App() {
     store.setTimerRunning(activePage === 'assembly' && !store.assemblyComplete && store.hasStarted)
   }, [activePage, store.assemblyComplete, store.hasStarted])
 
-  const handleQuizComplete = ({ requestId, testType, topic, score, maxScore, student }) =>
+  const handleQuizComplete = ({ requestId, testType, score, maxScore, student }) =>
     saveQuizRecord({
       requestId,
       testType,
-      topic,
       score,
       maxScore,
       // Keep the old Apps Script deployment compatible while recording the room value.
