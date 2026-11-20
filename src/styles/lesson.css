@@ -1,0 +1,373 @@
+/* ==========================================================================
+   Clean PDF Lesson Viewer & Document View Styles
+   ========================================================================== */
+
+.pdf-lesson-container {
+  min-height: calc(100vh - 120px);
+  background-color: #f1f5f9;
+  padding: 16px 20px 40px 20px;
+  font-family: 'Leelawadee UI', Tahoma, system-ui, sans-serif;
+  color: #1e293b;
+}
+
+/* Toolbar */
+.pdf-lesson-toolbar {
+  max-width: 980px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #cbd5e1;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pdf-toolbar-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pdf-unit-badge {
+  background: #0f2b5c;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.pdf-toolbar-title h1 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pdf-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.pdf-btn.primary {
+  background: #2563eb;
+  color: #ffffff;
+  border: 1px solid #1d4ed8;
+}
+
+.pdf-btn.primary:hover {
+  background: #1d4ed8;
+}
+
+.pdf-btn.secondary {
+  background: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.pdf-btn.secondary:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* PDF Embedded View */
+.pdf-viewer-frame-wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid #cbd5e1;
+}
+
+.pdf-iframe {
+  width: 100%;
+  height: 90vh;
+  min-height: 850px;
+  border: none;
+  display: block;
+}
+
+/* Document View (A4 Paper Sheets) */
+.pdf-doc-reader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.doc-page-sheet {
+  width: 100%;
+  max-width: 820px;
+  background: #ffffff;
+  padding: 36px 44px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Page 1 Official Table */
+.doc-page-header-official {
+  margin-bottom: 20px;
+}
+
+.doc-official-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #0f2b5c;
+  font-size: 0.85rem;
+}
+
+.doc-official-table td {
+  border: 1px solid #334155;
+  padding: 6px 10px;
+  vertical-align: middle;
+}
+
+.col-emblem-td {
+  width: 85px;
+  text-align: center;
+  background: #f8fafc;
+}
+
+.emblem-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.emblem-symbol {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fef08a;
+  border: 2px solid #ca8a04;
+  color: #854d0e;
+  font-weight: 800;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.col-center-td {
+  text-align: center;
+}
+
+.col-right-td {
+  width: 150px;
+  font-size: 0.8rem;
+}
+
+.col-footer-td {
+  background: #f8fafc;
+  padding: 6px 12px;
+}
+
+/* Running Header (แถบหน้าใหม่ หน้าเนื้อหา) */
+.doc-running-header {
+  margin-bottom: 20px;
+}
+
+.running-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 6px;
+  gap: 12px;
+}
+
+.running-badge {
+  background: #0f2b5c;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.running-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0f172a;
+  flex-grow: 1;
+}
+
+.running-page-num {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+}
+
+.running-header-line {
+  height: 2px;
+  background: linear-gradient(90deg, #0f2b5c 0%, #0284c7 45%, #cbd5e1 100%);
+  border-radius: 1px;
+}
+
+/* Document Body Elements */
+.doc-page-body {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #1e293b;
+}
+
+.doc-h2 {
+  font-size: 1.05rem;
+  color: #0f2b5c;
+  margin: 16px 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+
+.doc-page-body p {
+  margin: 0 0 10px 0;
+  text-align: justify;
+}
+
+.doc-subnote {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.doc-hw-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+}
+
+.doc-hw-box h3 {
+  margin: 0 0 4px 0;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.doc-hw-box p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #334155;
+}
+
+.doc-step-block {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+
+.doc-step-block h3 {
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.doc-step-block ol, .doc-step-block ul {
+  margin: 0;
+  padding-left: 22px;
+  line-height: 1.65;
+}
+
+.doc-step-block li {
+  margin-bottom: 4px;
+}
+
+.doc-tip {
+  margin-top: 8px;
+  background: #eff6ff;
+  border-left: 3px solid #2563eb;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  color: #1e40af;
+  border-radius: 0 4px 4px 0;
+}
+
+.doc-caution {
+  margin-top: 8px;
+  background: #fef2f2;
+  border-left: 3px solid #dc2626;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  color: #991b1b;
+  border-radius: 0 4px 4px 0;
+}
+
+.doc-ol {
+  margin: 0 0 14px 0;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+
+.doc-checklist-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 10px 0;
+}
+
+.doc-checklist-table th {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 8px 12px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.doc-checklist-table td {
+  border: 1px solid #cbd5e1;
+  padding: 6px 12px;
+}
+
+.doc-win-step {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  font-size: 0.88rem;
+}
+
+.doc-page-footer {
+  text-align: right;
+  margin-top: 20px;
+  padding-top: 8px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+  .doc-page-sheet {
+    padding: 20px 16px;
+  }
+  .pdf-iframe {
+    height: 70vh;
+  }
+}

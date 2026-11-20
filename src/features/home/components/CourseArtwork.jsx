@@ -14,7 +14,14 @@ export default function CourseArtwork({ type, hero = false }) {
   if (photo) return <img className="tutor-course-photo" src={photo.src} alt={photo.alt} loading="lazy" decoding="async" width="1536" height="1024" />
   return <svg viewBox="0 0 520 340" className={`lab-art lab-art-${type}`} fill="none" aria-hidden="true">
     <rect x="58" y="48" width="404" height="242" rx="12" fill="currentColor" opacity=".08" />
-    {type === 'hardware' ? <>
+    {type === 'lesson' ? <>
+      <rect x="135" y="65" width="250" height="210" rx="10" fill="white" stroke="#2563eb" strokeWidth="5" />
+      <rect x="155" y="85" width="70" height="24" rx="4" fill="#dbeafe" />
+      <path d="M165 97h50" stroke="#1d4ed8" strokeWidth="3" strokeLinecap="round" />
+      <path d="M155 125h210M155 145h210M155 165h150M155 195h210M155 215h180M155 235h120" stroke="#94a3b8" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="345" cy="97" r="14" fill="#fef08a" stroke="#ca8a04" strokeWidth="3" />
+      <path d="M341 97l3 3 6-6" stroke="#854d0e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </> : type === 'hardware' ? <>
       <rect x="114" y="83" width="209" height="139" rx="8" fill="white" stroke="#273c52" strokeWidth="6" />
       <rect x="125" y="94" width="187" height="113" rx="2" fill="#dce9e6" />
       <path d="M191 222v25h54v-25M170 253h97" stroke="#273c52" strokeWidth="6" strokeLinecap="round" />

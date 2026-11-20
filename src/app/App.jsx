@@ -2,6 +2,7 @@ import React, { useEffect, lazy, Suspense } from 'react'
 import TopNav from '../components/layout/TopNav.jsx'
 import SiteFooter from '../components/layout/SiteFooter'
 const AssemblyPage = lazy(() => import('../features/assembly/pages/AssemblyPage'))
+const LessonPage = lazy(() => import('../features/lesson/pages/LessonPage'))
 import { useAssemblyStore } from '../features/assembly/hooks/useAssemblyStore.js'
 import HomePage from '../features/home/pages/HomePage'
 const QuizPage = lazy(() => import('../features/quiz/pages/QuizPage').then((module) => ({ default: module.QuizPage })))
@@ -43,6 +44,8 @@ export default function App() {
     switch (activePage) {
       case 'home':
         return <HomePage onNavigate={navigate} />
+      case 'lesson':
+        return <LessonPage onNavigate={navigate} />
       case 'assembly':
         return <AssemblyPage store={store} />
       case 'windows':

@@ -8,7 +8,11 @@ export default function HomeHero({ onNavigate }) {
         <p className="computer-subject"><span aria-hidden="true">▣</span> การติดตั้งและบริการงานคอมพิวเตอร์</p>
         <h1>ประกอบคอมพิวเตอร์<br /><span>และติดตั้ง Windows</span></h1>
         <p className="computer-hero-description">เรียนรู้ทุกขั้นตอนการประกอบคอมพิวเตอร์อย่างถูกต้อง<br className="desktop-break" /> พร้อมการติดตั้งระบบปฏิบัติการ Windows ทีละขั้นตอน<br className="desktop-break" /> เข้าใจง่าย ใช้ได้จริง</p>
-        <div className="computer-hero-actions"><button className="learning-btn" onClick={() => onNavigate('assembly')}>เริ่มฝึกประกอบคอม <span aria-hidden="true">→</span></button><button className="learning-btn secondary" onClick={() => onNavigate('windows')}>ฝึกติดตั้ง Windows <span aria-hidden="true">→</span></button></div>
+        <div className="computer-hero-actions">
+          <button className="learning-btn" onClick={() => onNavigate('lesson')}>📖 อ่านเนื้อหาบทเรียน <span aria-hidden="true">→</span></button>
+          <button className="learning-btn secondary" onClick={() => onNavigate('assembly')}>ฝึกประกอบคอม <span aria-hidden="true">→</span></button>
+          <button className="learning-btn secondary" onClick={() => onNavigate('windows')}>ฝึกติดตั้ง Windows <span aria-hidden="true">→</span></button>
+        </div>
         <a className="hero-course-link" href="#learning-courses">ดูบทเรียนทั้งหมด <span aria-hidden="true">&#8595;</span></a>
         <p className="computer-hero-note">เรียนรู้ผ่านแบบจำลอง ฝึกซ้ำได้ตามต้องการ</p>
       </div>
